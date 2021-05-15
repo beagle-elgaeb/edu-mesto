@@ -6,13 +6,13 @@
 @media screen and (max-width: 980px) {
   .page__container {
     width: 581px;
-    margin: 0 auto 0;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
 
 @media screen and (max-width: 680px) {
   .page__container {
     width: 320px;
-    margin: 0 auto 0;
   }
 }

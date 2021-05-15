@@ -1,0 +1,7 @@
+.lighten_opacity_06 {
+  transition: opacity 0.5s ease-out;
+}
+
+.lighten_opacity_06:hover {
+  opacity: 0.6;
+}
