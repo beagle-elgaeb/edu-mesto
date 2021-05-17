@@ -2,9 +2,9 @@ let popup = document.querySelector(".popup");
 let buttonEditProfile = document.querySelector(".profile__button-edit");
 let buttonClosePopup = document.querySelector(".popup__button-close");
 let fullName = document.querySelector(".profile__info-full-name");
-let inputFullName = document.querySelector(".popup__input_text_full-name");
+let inputFullName = document.querySelector(".popup__form-item_text_full-name");
 let profession = document.querySelector(".profile__info-profession");
-let inputProfession = document.querySelector(".popup__input_text_profession");
+let inputProfession = document.querySelector(".popup__form-item_text_profession");
 let buttonSaveProfile = document.querySelector(".popup__button-save");
 
 // Открываем и закрываем popup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -26,7 +26,6 @@ popup.addEventListener("click", function(event) {
 })
 
 // Вставляем в форму данные из профиля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 inputFullName.value = fullName.textContent;
 inputProfession.value = profession.textContent;
