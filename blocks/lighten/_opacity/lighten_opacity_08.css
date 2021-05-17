@@ -1,7 +1,0 @@
-.lighten_opacity_08 {
-  transition: opacity 0.5s ease-out;
-}
-
-.lighten_opacity_08:hover {
-  opacity: 0.8;
-}

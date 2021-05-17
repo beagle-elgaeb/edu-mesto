@@ -10,8 +10,8 @@
 @import url(./blocks/list/list.css);                                   /* Списки */
   @import url(./blocks/list/__item/list__item.css);
 @import url(./blocks/lighten/lighten.css);                             /* Затемнение кнопок */
-  @import url(./blocks/lighten/_opacity/lighten_opacity_06.css);
-  @import url(./blocks/lighten/_opacity/lighten_opacity_08.css);
+  @import url(./blocks/lighten/_opacity/lighten_opacity_chut-menee-prozrachno.css);
+  @import url(./blocks/lighten/_opacity/lighten_opacity_chut-bolee-prozrachno.css);
 
 /* Шапка */
 @import url(./blocks/header/header.css);
