@@ -1,0 +1,12 @@
+.card__button-like {
+  width: fit-content;
+  height: fit-content;
+  background: rgba(0,0,0,0.0);
+  border: none;
+  transition: opacity 0.5s ease-out;
+  margin: 0 18px 0 0;
+}
+
+.card__button-like:hover {
+  opacity: 0.5;
+}

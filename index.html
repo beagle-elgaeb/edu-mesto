@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Евгения Никонова" />
-  <title>Mesto</title>
-  <link rel="stylesheet" href="./index.css" />
+  <title>Место</title>
+  <link rel="stylesheet" href="./pages/index.css" />
 </head>
 
 <body class="body">
@@ -14,9 +14,7 @@
     <div class="page__container">
       <!-- Шапка -->
       <header class="header">
-        <div class="logo">
-          <a href="#" target="_blank"><img src="./images/logo.png" alt="Логотип" class="logo__image" /></a>
-        </div>
+        <a href="#" target="_blank" class="logo"><img src="./images/logo.svg" alt="Логотип" class="logo__image" /></a>
       </header>
       <!-- Контент -->
       <main class="content">
@@ -26,15 +24,15 @@
           <div class="profile__info">
             <div class="profile__info-full-name-and-button-edit">
               <h1 class="profile__info-full-name">Жужа</h1>
-              <button class="profile__button-edit lighten lighten_opacity_chut-menee-prozrachno">
-                <img src="./images/button-edit.png" alt="Кнопка редактирования профиля"
+              <button type="button" aria-label="Изменить" class="profile__button-edit">
+                <img src="./images/button-edit.svg" alt="Кнопка редактирования профиля"
                   class="profile__button-edit-img" />
               </button>
             </div>
             <p class="profile__info-profession">Профессиональная кошка</p>
           </div>
-          <button class="profile__button-add lighten lighten_opacity_chut-menee-prozrachno">
-            <img src="./images/button-add.png" alt="Кнопка добавления места" class="profile__button-add-img" />
+          <button type="button" aria-label="Добавить фото" class="profile__button-add">
+            <img src="./images/button-add.svg" alt="Кнопка добавления места" class="profile__button-add-img" />
           </button>
         </section>
         <!-- Места -->
@@ -44,54 +42,48 @@
               <img src="./images/photo-gallery1.jpg" alt="Жужа на подоконнике" class="card__photo">
               <div class="card__description-and-like">
                 <h2 class="card__description">Подоконник</h2>
-                <img src="./images/like.svg" alt="Нажмите, чтобы поставить лайк"
-                  class="card__like card__like_disabled lighten lighten_opacity_chut-menee-prozrachno">
-                <img src="./images/like-active.png" alt="Лайк поставлен" class="card__like card__like_active">
+                <button type="button" aria-label="Нравится" class="card__button-like"><img src="./images/like-active.png" alt="Лайк поставлен"
+                    class="card__button-like-img card__button-like_active"></button>
               </div>
             </li>
             <li class="photo-gallery__card card list__item">
               <img src="./images/photo-gallery2.jpg" alt="Жужа в ванной" class="card__photo">
               <div class="card__description-and-like">
                 <h2 class="card__description">Ванна</h2>
-                <img src="./images/like.svg" alt="Нажмите, чтобы поставить лайк"
-                  class="card__like card__like_disabled lighten lighten_opacity_chut-menee-prozrachno">
-                <img src="./images/like-active.png" alt="Лайк поставлен" class="card__like card__like_active">
+                <button type="button" aria-label="Нравится" class="card__button-like"><img src="./images/like-active.png" alt="Лайк поставлен"
+                    class="card__button-like-img card__button-like_active"></button>
               </div>
             </li>
             <li class="photo-gallery__card card list__item">
               <img src="./images/photo-gallery3.jpg" alt="Жужа на прогулке" class="card__photo">
               <div class="card__description-and-like">
-                <h2 class="card__description">Тимирязевская</h2>
-                <img src="./images/like.svg" alt="Нажмите, чтобы поставить лайк"
-                  class="card__like card__like_disabled lighten lighten_opacity_chut-menee-prozrachno">
-                <img src="./images/like-active.png" alt="Лайк поставлен" class="card__like card__like_active">
+                <h2 class="card__description">Метро Тимирязевская</h2>
+                <button type="button" aria-label="Нравится" class="card__button-like"><img src="./images/like-active.png" alt="Лайк поставлен"
+                    class="card__button-like-img card__button-like_active"></button>
               </div>
             </li>
             <li class="photo-gallery__card card list__item">
               <img src="./images/photo-gallery4.jpg" alt="Жужа на балконе" class="card__photo">
               <div class="card__description-and-like">
                 <h2 class="card__description">Балкон</h2>
-                <img src="./images/like.svg" alt="Нажмите, чтобы поставить лайк"
-                  class="card__like card__like_disabled lighten lighten_opacity_chut-menee-prozrachno">
-                <img src="./images/like-active.png" alt="Лайк поставлен" class="card__like card__like_active">
+                <button type="button" aria-label="Нравится" class="card__button-like"><img src="./images/like-active.png" alt="Лайк поставлен"
+                    class="card__button-like-img card__button-like_active"></button>
               </div>
             </li>
             <li class="photo-gallery__card card list__item">
               <img src="./images/photo-gallery5.jpeg" alt="Жужа под одеялом" class="card__photo">
               <div class="card__description-and-like">
                 <h2 class="card__description">Одеяло</h2>
-                <img src="./images/like.svg" alt="Нажмите, чтобы поставить лайк"
-                  class="card__like card__like_disabled lighten lighten_opacity_chut-menee-prozrachno">
-                <img src="./images/like-active.png" alt="Лайк поставлен" class="card__like card__like_active">
+                <button type="button" aria-label="Нравится" class="card__button-like"><img src="./images/like-active.png" alt="Лайк поставлен"
+                    class="card__button-like-img card__button-like_active"></button>
               </div>
             </li>
             <li class="photo-gallery__card card list__item">
               <img src="./images/photo-gallery6.jpg" alt="Жужа на даче" class="card__photo">
               <div class="card__description-and-like">
                 <h2 class="card__description">Дача</h2>
-                <img src="./images/like.svg" alt="Нажмите, чтобы поставить лайк"
-                  class="card__like card__like_disabled lighten lighten_opacity_chut-menee-prozrachno">
-                <img src="./images/like-active.png" alt="Лайк поставлен" class="card__like card__like_active">
+                <button type="button" aria-label="Нравится" class="card__button-like"><img src="./images/like-active.png" alt="Лайк поставлен"
+                    class="card__button-like-img card__button-like_active"></button>
               </div>
             </li>
           </ul>
@@ -103,21 +95,22 @@
       </footer>
     </div>
     <div class="popup">
-      <form class="popup__container">
-        <h3 class="popup__title">Редактировать профиль</h3>
-        <fieldset class="popup__input">
-          <input type="text" class="popup__form-item popup__form-item_text_full-name">
-          <input type="text" class="popup__form-item popup__form-item_text_profession">
-        </fieldset>
-        <button class="popup__button-save lighten lighten_opacity_chut-bolee-prozrachno">
-          <p class="popup__button-save-text">Сохранить</p>
-        </button>
-        <button class="popup__button-close lighten lighten_opacity_chut-menee-prozrachno"><img src="./images/сlose-icon.png" alt="Закрыть окно"
-          class="popup__button-close-img"></button>
-      </form>
+      <div class="popup__container">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form name="Данные пользователя" class="popup__form">
+          <fieldset class="popup__input">
+            <input type="text" name="Имя" class="popup__form-item popup__form-item_text_full-name">
+            <input type="text" name="Профессия" class="popup__form-item popup__form-item_text_profession">
+          </fieldset>
+          <button type="submit"
+            class="popup__button-save">Сохранить</button>
+        </form>
+        <button type="button" aria-label="Закрыть окно редактирования" class="popup__button-close"><img
+            src="./images/button-сlose.svg" alt="Закрыть окно" class="popup__button-close-img"></button>
+      </div>
     </div>
   </div>
-  <script src="./script.js"></script>
+  <script src="./scripts/script.js"></script>
 </body>
 
 </html>
