@@ -8,6 +8,7 @@
   border: none;
   border-radius: 2px;
   background: #000;
+  cursor: pointer;
   transition: opacity 0.5s ease-out;
   margin: 48px 0 34px 0;
 }

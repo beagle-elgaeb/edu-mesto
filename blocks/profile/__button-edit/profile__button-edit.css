@@ -6,6 +6,7 @@
   align-items: center;
   border: 1px solid #fff;
   background: rgba(0, 0, 0, 0);
+  cursor: pointer;
   transition: opacity 0.5s ease-out;
   margin: 0 0 9px 18px;
 }
