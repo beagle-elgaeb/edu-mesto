@@ -7,6 +7,10 @@
   margin: 30px 0 0 0;
 }
 
+::placeholder {
+  color: #C4C4C4;
+}
+
 @media screen and (max-width: 680px) {
   .popup__form-item {
     width: 238px;

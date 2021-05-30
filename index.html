@@ -23,75 +23,22 @@
           <div class="profile__avatar"></div>
           <div class="profile__info">
             <div class="profile__info-full-name-and-button-edit">
-              <h1 class="profile__info-full-name">Жужа</h1>
+              <h1 class="profile__info-full-name">Владимир Ульянов</h1>
               <button type="button" aria-label="Изменить" class="profile__button-edit">
                 <img src="./images/button-edit.svg" alt="Кнопка редактирования профиля"
                   class="profile__button-edit-img" />
               </button>
             </div>
-            <p class="profile__info-profession">Профессиональная кошка</p>
+            <p class="profile__info-profession">Памятник</p>
           </div>
-          <button type="button" aria-label="Добавить фото" class="profile__button-add">
-            <img src="./images/button-add.svg" alt="Кнопка добавления места" class="profile__button-add-img" />
+          <button type="button" aria-label="Добавить фото" class="profile__button-add-card">
+            <img src="./images/button-add.svg" alt="Кнопка добавления места" class="profile__button-add-card-img" />
           </button>
         </section>
         <!-- Места -->
         <section class="photo-gallery">
           <ul class="photo-gallery__cards list">
-            <li class="photo-gallery__card card list__item">
-              <img src="./images/photo-gallery1.jpg" alt="Жужа на подоконнике" class="card__photo">
-              <div class="card__description-and-like">
-                <h2 class="card__description">Подоконник</h2>
-                <button type="button" aria-label="Нравится" class="card__button-like"><img
-                    src="./images/like.svg" alt="Поставить лайк"
-                    class="card__button-like-img"></button>
-              </div>
-            </li>
-            <li class="photo-gallery__card card list__item">
-              <img src="./images/photo-gallery2.jpg" alt="Жужа в ванной" class="card__photo">
-              <div class="card__description-and-like">
-                <h2 class="card__description">Ванна</h2>
-                <button type="button" aria-label="Нравится" class="card__button-like"><img
-                    src="./images/like.svg" alt="Поставить лайк"
-                    class="card__button-like-img"></button>
-              </div>
-            </li>
-            <li class="photo-gallery__card card list__item">
-              <img src="./images/photo-gallery3.jpg" alt="Жужа на прогулке" class="card__photo">
-              <div class="card__description-and-like">
-                <h2 class="card__description">Метро Тимирязевская</h2>
-                <button type="button" aria-label="Нравится" class="card__button-like"><img
-                    src="./images/like.svg" alt="Поставить лайк"
-                    class="card__button-like-img"></button>
-              </div>
-            </li>
-            <li class="photo-gallery__card card list__item">
-              <img src="./images/photo-gallery4.jpg" alt="Жужа на балконе" class="card__photo">
-              <div class="card__description-and-like">
-                <h2 class="card__description">Балкон</h2>
-                <button type="button" aria-label="Нравится" class="card__button-like"><img
-                    src="./images/like.svg" alt="Поставить лайк"
-                    class="card__button-like-img"></button>
-              </div>
-            </li>
-            <li class="photo-gallery__card card list__item">
-              <img src="./images/photo-gallery5.jpeg" alt="Жужа под одеялом" class="card__photo">
-              <div class="card__description-and-like">
-                <h2 class="card__description">Одеяло</h2>
-                <button type="button" aria-label="Нравится" class="card__button-like"><img
-                    src="./images/like.svg" alt="Поставить лайк"
-                    class="card__button-like-img"></button>
-              </div>
-            </li>
-            <li class="photo-gallery__card card list__item">
-              <img src="./images/photo-gallery6.jpg" alt="Жужа на даче" class="card__photo">
-              <div class="card__description-and-like">
-                <h2 class="card__description">Дача</h2>
-                <button type="button" aria-label="Нравится" class="card__button-like"><img
-                    src="./images/like.svg" alt="Поставить лайк"
-                    class="card__button-like-img"></button>
-              </div>
-            </li>
+            <!-- Место для карточек -->
           </ul>
         </section>
       </main>
@@ -100,21 +47,65 @@
         <p class="footer__copyright">© 2020 Mesto Russia</p>
       </footer>
     </div>
-    <div class="popup">
+    <div class="popup popup_type_edit-profile">
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="Данные пользователя" class="popup__form">
+        <form name="Данные пользователя" class="popup__form popup__form_type_edit-profile">
           <fieldset class="popup__input">
-            <input type="text" name="Имя" class="popup__form-item popup__form-item_text_full-name">
-            <input type="text" name="Профессия" class="popup__form-item popup__form-item_text_profession">
+            <input type="text" name="Имя" class="popup__form-item popup__form-item_text_full-name" />
+            <input type="text" name="Профессия" class="popup__form-item popup__form-item_text_profession" />
           </fieldset>
-          <button type="submit" class="popup__button-save">Сохранить</button>
+          <button type="submit" class="popup__button-save popup__button-save-profile">
+            Сохранить
+          </button>
         </form>
-        <button type="button" aria-label="Закрыть окно редактирования" class="popup__button-close"><img
-            src="./images/button-сlose.svg" alt="Закрыть окно" class="popup__button-close-img"></button>
+        <button type="button" aria-label="Закрыть окно редактирования" class="popup__button-close">
+          <img src="./images/button-сlose.svg" alt="Закрыть окно" class="popup__button-close-img" />
+        </button>
+      </div>
+    </div>
+    <div class="popup popup_type_add-card">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <form name="Данные пользователя" class="popup__form popup__form_type_add-card">
+          <fieldset class="popup__input">
+            <input placeholder="Название" type="text" name="Название"
+              class="popup__form-item popup__form-item_text_title" />
+            <input placeholder="Ссылка на картинку" type="url" name="Ссылка на картинку"
+              class="popup__form-item popup__form-item_url_pic" />
+          </fieldset>
+          <button type="submit" class="popup__button-save popup__button-save-card">
+            Создать
+          </button>
+        </form>
+        <button type="button" aria-label="Закрыть окно создания карточки" class="popup__button-close">
+          <img src="./images/button-сlose.svg" alt="Закрыть окно" class="popup__button-close-img" />
+        </button>
+      </div>
+    </div>
+    <div class="popup popup_type_pic">
+      <div class="popup__pic-container">
+        <img src="" class="popup__pic" />
+        <h2 class="popup__pic-title"></h2>
+        <button type="button" aria-label="Закрыть картинку" class="popup__button-close">
+          <img src="./images/button-сlose.svg" alt="Закрыть окно" class="popup__button-close-img" />
+        </button>
       </div>
     </div>
   </div>
+  <template id="card-template">
+    <li class="photo-gallery__card card list__item">
+      <button type="button" aria-label="Удалить" class="card__button-delete">
+        <img src="./images/button-delete.svg" alt="Удалить карточку" class="card__button-delete-img" />
+      </button>
+      <img src="" alt="Фотография" class="card__photo" />
+      <div class="card__title-and-like">
+        <h2 class="card__title"></h2>
+        <button type="button" aria-label="Нравится" class="card__button-like">
+        </button>
+      </div>
+    </li>
+  </template>
   <script src="./scripts/script.js"></script>
 </body>
 

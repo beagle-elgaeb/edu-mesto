@@ -4,7 +4,8 @@
   border-radius: 60px;
   overflow: hidden;
   background: url(../../../images/profile-photo.jpg);
-  background-size: contain;
+  background-size: cover;
+  background-position: center;
   margin: 0 30px 0 0;
 }
 

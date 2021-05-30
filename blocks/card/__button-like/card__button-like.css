@@ -1,7 +1,7 @@
 .card__button-like {
-  width: fit-content;
-  height: fit-content;
-  background: rgba(0,0,0,0.0);
+  width: 22px;
+  height: 19px;
+  background: url(../../../images/like.svg);
   border: none;
   cursor: pointer;
   transition: opacity 0.5s ease-out;

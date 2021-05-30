@@ -1,0 +1,17 @@
+.card__button-delete {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(0,0,0,0.0);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.5s ease-out;
+  margin: 0;
+  padding: 0;
+}
+
+.card__button-delete:hover {
+  opacity: 0.6;
+}

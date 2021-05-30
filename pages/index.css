@@ -22,8 +22,8 @@
   @import url(../blocks/profile/__button-edit/profile__button-edit.css);
   @import url(../blocks/profile/__button-edit-img/profile__button-edit-img.css);
   @import url(../blocks/profile/__info-profession/profile__info-profession.css);
-  @import url(../blocks/profile/__button-add/profile__button-add.css);
-  @import url(../blocks/profile/__button-add-img/profile__button-add-img.css);
+  @import url(../blocks/profile/__button-add-card/profile__button-add-card.css);
+  @import url(../blocks/profile/__button-add-card-img/profile__button-add-card-img.css);
 
 /* Галерея */
 @import url(../blocks/photo-gallery/photo-gallery.css);
@@ -32,12 +32,13 @@
 
 /* Карточка */
 @import url(../blocks/card/card.css);
+  @import url(../blocks/card/__button-delete/card__button-delete.css);
+  @import url(../blocks/card/__button-delete-img/card__button-delete-img.css);
   @import url(../blocks/card/__photo/card__photo.css);
-  @import url(../blocks/card/__description-and-like/card__description-and-like.css);
-  @import url(../blocks/card/__description/card__description.css);
+  @import url(../blocks/card/__title-and-like/card__title-and-like.css);
+  @import url(../blocks/card/__title/card__title.css);
   @import url(../blocks/card/__button-like/card__button-like.css);
-  @import url(../blocks/card/__button-like-img/card__button-like-img.css);
-  @import url(../blocks/card/__button-like-img/_active/card__button-like-img_active.css);
+  @import url(../blocks/card/__button-like/_active/card__button-like_active.css);
 
 /* Ноги */
 @import url(../blocks/footer/footer.css);
@@ -54,3 +55,8 @@
   @import url(../blocks/popup/__button-save/popup__button-save.css);
   @import url(../blocks/popup/__button-close/popup__button-close.css);
   @import url(../blocks/popup/__button-close-img/popup__button-close-img.css);
+
+/* Просмотр фото */
+  @import url(../blocks/popup/__pic-container/popup__pic-container.css);
+  @import url(../blocks/popup/__pic/popup__pic.css);
+  @import url(../blocks/popup/__pic-title/popup__pic-title.css);
