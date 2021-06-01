@@ -146,9 +146,6 @@ popups.forEach(function (popup, i) {
       closePopup(popup);
     }
   });
-
-  //          по esc
-  // document.removeEventListener("keydown", closePopupEsc);
 });
 
 // Сохранение профайла ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
