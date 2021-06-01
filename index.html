@@ -52,8 +52,8 @@
         <h2 class="popup__title">Редактировать профиль</h2>
         <form name="Данные пользователя" class="popup__form popup__form_type_edit-profile">
           <fieldset class="popup__input">
-            <input type="text" name="Имя" class="popup__form-item popup__form-item_text_full-name" />
-            <input type="text" name="Профессия" class="popup__form-item popup__form-item_text_profession" />
+            <input required placeholder="Ваше имя" type="text" name="Имя" class="popup__form-item popup__form-item_text_full-name" />
+            <input required placeholder="Ваша профессия" type="text" name="Профессия" class="popup__form-item popup__form-item_text_profession" />
           </fieldset>
           <button type="submit" class="popup__button-save popup__button-save-profile">
             Сохранить
@@ -69,9 +69,9 @@
         <h2 class="popup__title">Новое место</h2>
         <form name="Данные пользователя" class="popup__form popup__form_type_add-card">
           <fieldset class="popup__input">
-            <input placeholder="Название" type="text" name="Название"
+            <input required placeholder="Название" type="text" name="Название"
               class="popup__form-item popup__form-item_text_title" />
-            <input placeholder="Ссылка на картинку" type="url" name="Ссылка на картинку"
+            <input required placeholder="Ссылка на картинку" type="url" name="Ссылка на картинку"
               class="popup__form-item popup__form-item_url_pic" />
           </fieldset>
           <button type="submit" class="popup__button-save popup__button-save-card">
@@ -106,6 +106,7 @@
       </div>
     </li>
   </template>
+  <script src="./scripts/primal-сards.js"></script>
   <script src="./scripts/script.js"></script>
 </body>
 

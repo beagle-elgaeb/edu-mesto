@@ -1,3 +1,7 @@
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~ ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 const popups = document.querySelectorAll(".popup");
 const closePopupButtons = document.querySelectorAll(".popup__button-close");
 
@@ -23,88 +27,131 @@ const cardForClone = cardTemplate.querySelector(".card");
 const cards = document.querySelector(".photo-gallery__cards");
 const picPopup = document.querySelector(".popup_type_pic");
 
-// Изначальные карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const primalCards = [
-  {
-    name: "Волгоград",
-    link: "https://avatars.mds.yandex.net/get-zen_doc/3530601/pub_605021e96c861f0107331d6f_605023e0011181447b64d7bf/scale_1200"
-  },
-  {
-    name: "Улан-Удэ",
-    link: "https://primamedia.gcdn.co/f/big/909/908018.jpg?a5a00b19b39368b4acbd101392c21d8a"
-  },
-  {
-    name: "Кострома",
-    link: "https://a.d-cd.net/8b23ad5s-1920.jpg"
-  },
-  {
-    name: "Артек",
-    link: "https://bugaga.ru/uploads/posts/2009-09/1252913248_artek_08.jpg"
-  },
-  {
-    name: "Рязань",
-    link: "https://cdn3.rzn.info/data/image/newsadd/base/2019/07/196167_5d19bcf718d7c_x2.jpg"
-  },
-  {
-    name: "Дубна",
-    link: "https://s3-eu-west-1.amazonaws.com/media.agentika.com/user/ec92109f-933c-4803-9728-44f5e44ebef6.jpeg"
-  }
-];
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ОБЪЯВЛЕНИЕ ФУНКЦИЙ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// Открываем popup редактирования профиля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Открытие popup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-editProfileButton.addEventListener("click", openPopupEdit);
-
-function openPopupEdit() {
-  editProfilePopup.classList.add("popup_opened");
-  fullNameInput.value = fullNameElement.textContent;
-  professionInput.value = professionElement.textContent;
+function openPopup(popup) {
+  popup.classList.add("popup_opened");
+  document.addEventListener("keydown", closePopupEsc);
 }
 
-// Открываем popup новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-addCardButton.addEventListener("click", openPopupAddCard);
-
-function openPopupAddCard() {
-  addCardPopup.classList.add("popup_opened");
-}
-
-// Закрываем popup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Закрытие popup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closePopupEsc);
 }
 
-// ~~~~~~~~~~~~~~~ кнопкой ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Закрытие popup по esc ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-popups.forEach(function(popup, i) {
-  closePopupButtons[i].addEventListener("click", function() {
-    closePopup(popup);
+function closePopupEsc(event) {
+  if (event.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
+  }
+}
+
+// Создание карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+function createCard(pic, title) {
+  // Клонирование карточки
+  const card = cardForClone.cloneNode(true);
+
+  const cardTitleElement = card.querySelector(".card__title");
+  const popupTitleElement = picPopup.querySelector(".popup__pic-title");
+  const cardPhotoElement = card.querySelector(".card__photo");
+  const popupPhotoElement = picPopup.querySelector(".popup__pic");
+  const likeCardButtons = card.querySelector(".card__button-like");
+  const deleteCardButtons = card.querySelector(".card__button-delete");
+  
+  // Заполнение карточки
+  cardPhotoElement.src = pic;
+  cardPhotoElement.alt = title;
+  cardTitleElement.textContent = title;
+
+  // Лайки
+  likeCardButtons.addEventListener("click", function (event) {
+    event.target.classList.toggle("card__button-like_active");
   });
+
+  // Удаление карточки
+  deleteCardButtons.addEventListener("click", function () {
+    card.remove();
+  });
+
+  // Открытие фотографии в попапе
+  cardPhotoElement.addEventListener("click", function () {
+    openPopup(picPopup);
+    popupPhotoElement.src = cardPhotoElement.src;
+    popupPhotoElement.alt = cardTitleElement.textContent
+    popupTitleElement.textContent = cardTitleElement.textContent;
+  });
+
+  return card;
+}
+
+// Добавление на страницу карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+function addCard(cards, card) {
+  cards.prepend(card);
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ОБРАБОТЧИКИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// Открытие popup редактирования профиля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+editProfileButton.addEventListener("click", function() {
+  openPopup(editProfilePopup);
+  fullNameInput.value = fullNameElement.textContent;
+  professionInput.value = professionElement.textContent;
 });
 
-// ~~~~~~~~~~~~~~~ по нажатию во вне ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Открытие popup новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+addCardButton.addEventListener("click", function() {
+  openPopup(addCardPopup);
+});
+
+// Закрытие popup  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 let mouseDownTarget;
 let mouseUpTarget;
 
+  // Переменная нажатия кнопки
 document.addEventListener("mousedown", function(event) {
   mouseDownTarget = event.target;
 })
 
+  // Переменная отжатия кнопки
 document.addEventListener("mouseup", function(event) {
   mouseUpTarget = event.target;
 });
 
-popups.forEach(function (popup) {
+  // Закрытие
+popups.forEach(function (popup, i) {
+
+  //          по крестику
+  closePopupButtons[i].addEventListener("click", function() {
+    closePopup(popup);
+  });
+
+  //          по вне
   popup.addEventListener("click", function(event) {
     if (event.target === event.currentTarget && mouseDownTarget === mouseUpTarget) {
       closePopup(popup);
     }
   });
+
+  //          по esc
+  // document.removeEventListener("keydown", closePopupEsc);
 });
 
-// Сохраняем профайл ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Сохранение профайла ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 editProfileForm.addEventListener("submit", function(event) {
   event.preventDefault();
@@ -117,47 +164,16 @@ editProfileForm.addEventListener("submit", function(event) {
   closePopup(popup);
 });
 
-// Создаём ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-function addCard(pic, title) {
-  const card = cardForClone.cloneNode(true);
-  const cardTitleElement = card.querySelector(".card__title");
-  const popupTitleElement = picPopup.querySelector(".popup__pic-title");
-  const cardPhotoElement = card.querySelector(".card__photo");
-  const popupPhotoElement = picPopup.querySelector(".popup__pic");
-  const likeCardButtons = card.querySelector(".card__button-like");
-  const deleteCardButtons = card.querySelector(".card__button-delete");
-  
-  cardPhotoElement.src = pic;
-  cardTitleElement.textContent = title;
-
-  likeCardButtons.addEventListener("click", function (event) {
-    event.target.classList.toggle("card__button-like_active");
-  });
-
-  deleteCardButtons.addEventListener("click", function () {
-    card.remove();
-  });
-
-  cardPhotoElement.addEventListener("click", function () {
-    picPopup.classList.add("popup_opened");
-    popupPhotoElement.src = cardPhotoElement.src;
-    popupTitleElement.textContent = cardTitleElement.textContent;
-  });
-
-  cards.prepend(card);
-}
-
-// ~~~~~~~ первоначальную карточку ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Добавление на страницу первоначальной карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 primalCards.forEach(function(cardData) {
-  addCard(cardData.link, cardData.name);
+  addCard(cards, createCard(cardData.link, cardData.name));
 });
 
-// ~~~~~~~ новую карточку ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Добавление на страницу новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 addCardForm.addEventListener("submit", function(event) {
   event.preventDefault();
-  addCard(picInput.value, titleInput.value);
+  addCard(cards, createCard(picInput.value, titleInput.value));
   closePopup(addCardPopup);
 });
