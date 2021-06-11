@@ -50,13 +50,14 @@
     <div class="popup popup_type_edit-profile">
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="Данные пользователя" class="popup__form popup__form_type_edit-profile" novalidate autocomplete="off">
+        <form name="Данные пользователя" class="popup__form popup__form_type_edit-profile" novalidate
+          autocomplete="off">
           <fieldset class="popup__fieldset">
-            <input id="name-input" class="popup__input popup__input_text_full-name" placeholder="Ваше имя"
-              type="text" name="name" required minlength="2" maxlength="40" autocomplete="off" />
+            <input id="name-input" class="popup__input popup__input_text_full-name" placeholder="Ваше имя" type="text"
+              name="name" required minlength="2" maxlength="40" autocomplete="off" />
             <span class="name-input-error popup__error"></span>
             <input id="about-you-input" class="popup__input popup__input_text_profession" placeholder="Ваша профессия"
-            type="text" name="about-you" required minlength="2" maxlength="200" autocomplete="off" />
+              type="text" name="about-you" required minlength="2" maxlength="200" autocomplete="off" />
             <span class="about-you-input-error popup__error"></span>
           </fieldset>
           <button type="submit" class="popup__button-save popup__button-save-profile">
@@ -74,10 +75,10 @@
         <form name="Данные пользователя" class="popup__form popup__form_type_add-card" novalidate autocomplete="off">
           <fieldset class="popup__fieldset">
             <input id="title-pic-input" class="popup__input popup__input_text_title" placeholder="Название места"
-            type="text" name="title-pic" required minlength="2" maxlength="30" autocomplete="off" />
+              type="text" name="title-pic" required minlength="2" maxlength="30" autocomplete="off" />
             <span class="title-pic-input-error popup__error"></span>
-            <input id="url-pic-input" class="popup__input popup__input_url_pic" placeholder="Ссылка на картинку" 
-            type="url" name="url-pic" required autocomplete="off" />
+            <input id="url-pic-input" class="popup__input popup__input_url_pic" placeholder="Ссылка на картинку"
+              type="url" name="url-pic" required autocomplete="off" />
             <span class="url-pic-input-error popup__error"></span>
           </fieldset>
           <button type="submit" class="popup__button-save popup__button-save-card">
@@ -91,7 +92,7 @@
     </div>
     <div class="popup popup_type_pic">
       <div class="popup__pic-container">
-        <img class="popup__pic" />
+        <img class="popup__pic" alt="Изображение отсутствует" src="Изображение отсутствует"/>
         <h2 class="popup__pic-title"></h2>
         <button type="button" aria-label="Закрыть картинку" class="popup__button-close">
           <img src="./images/button-сlose.svg" alt="Закрыть окно" class="popup__button-close-img" />
