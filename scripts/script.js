@@ -4,6 +4,7 @@
 
 const popups = document.querySelectorAll(".popup");
 const closePopupButtons = document.querySelectorAll(".popup__button-close");
+const escape = "Escape";
 
 // Попап редактирования профиля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const editProfilePopup = document.querySelector(".popup_type_edit-profile");
@@ -11,15 +12,15 @@ const editProfileForm = document.querySelector(".popup__form_type_edit-profile")
 const editProfileButton = document.querySelector(".profile__button-edit");
 const fullNameElement = document.querySelector(".profile__info-full-name");
 const professionElement = document.querySelector(".profile__info-profession");
-const fullNameInput = document.querySelector(".popup__form-item_text_full-name");
-const professionInput = document.querySelector(".popup__form-item_text_profession");
+const fullNameInput = document.querySelector(".popup__input_text_full-name");
+const professionInput = document.querySelector(".popup__input_text_profession");
 
 // Попап добавления карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const addCardPopup = document.querySelector(".popup_type_add-card");
 const addCardForm = document.querySelector(".popup__form_type_add-card");
 const addCardButton = document.querySelector(".profile__button-add-card");
-const picInput = document.querySelector(".popup__form-item_url_pic");
-const titleInput = document.querySelector(".popup__form-item_text_title");
+const picInput = document.querySelector(".popup__input_url_pic");
+const titleInput = document.querySelector(".popup__input_text_title");
 
 // Карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const cardTemplate = document.querySelector("#card-template").content;
@@ -47,8 +48,8 @@ function closePopup(popup) {
 
 // Закрытие popup по esc ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function closePopupEsc(event) {
-  if (event.key === "Escape") {
+function closePopupEsc(evt) {
+  if (evt.key === escape) {
     const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
@@ -66,15 +67,15 @@ function createCard(pic, title) {
   const popupPhotoElement = picPopup.querySelector(".popup__pic");
   const likeCardButtons = card.querySelector(".card__button-like");
   const deleteCardButtons = card.querySelector(".card__button-delete");
-  
+
   // Заполнение карточки
   cardPhotoElement.src = pic;
   cardPhotoElement.alt = title;
   cardTitleElement.textContent = title;
 
   // Лайки
-  likeCardButtons.addEventListener("click", function (event) {
-    event.target.classList.toggle("card__button-like_active");
+  likeCardButtons.addEventListener("click", function (evt) {
+    evt.target.classList.toggle("card__button-like_active");
   });
 
   // Удаление карточки
@@ -105,15 +106,23 @@ function addCard(cards, card) {
 
 // Открытие popup редактирования профиля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-editProfileButton.addEventListener("click", function() {
-  openPopup(editProfilePopup);
+editProfileButton.addEventListener("click", function () {
   fullNameInput.value = fullNameElement.textContent;
   professionInput.value = professionElement.textContent;
+
+  const fullNameEvent = new Event("input");
+  fullNameInput.dispatchEvent(fullNameEvent);
+  const professionEvent = new Event("input");
+  professionInput.dispatchEvent(professionEvent);
+
+  openPopup(editProfilePopup);
 });
 
 // Открытие popup новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-addCardButton.addEventListener("click", function() {
+addCardButton.addEventListener("click", function () {
+  addCardForm.reset();
+
   openPopup(addCardPopup);
 });
 
@@ -122,27 +131,27 @@ addCardButton.addEventListener("click", function() {
 let mouseDownTarget;
 let mouseUpTarget;
 
-  // Переменная нажатия кнопки
-document.addEventListener("mousedown", function(event) {
-  mouseDownTarget = event.target;
+// Переменная нажатия кнопки
+document.addEventListener("mousedown", function (evt) {
+  mouseDownTarget = evt.target;
 })
 
-  // Переменная отжатия кнопки
-document.addEventListener("mouseup", function(event) {
-  mouseUpTarget = event.target;
+// Переменная отжатия кнопки
+document.addEventListener("mouseup", function (evt) {
+  mouseUpTarget = evt.target;
 });
 
-  // Закрытие
+// Закрытие
 popups.forEach(function (popup, i) {
 
   //          по крестику
-  closePopupButtons[i].addEventListener("click", function() {
+  closePopupButtons[i].addEventListener("click", function () {
     closePopup(popup);
   });
 
   //          по вне
-  popup.addEventListener("click", function(event) {
-    if (event.target === event.currentTarget && mouseDownTarget === mouseUpTarget) {
+  popup.addEventListener("click", function (evt) {
+    if (evt.target === evt.currentTarget && mouseDownTarget === mouseUpTarget) {
       closePopup(popup);
     }
   });
@@ -150,27 +159,35 @@ popups.forEach(function (popup, i) {
 
 // Сохранение профайла ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-editProfileForm.addEventListener("submit", function(event) {
-  event.preventDefault();
+editProfileForm.addEventListener("submit", function (evt) {
+  evt.preventDefault();
 
   fullNameElement.textContent = fullNameInput.value;
   professionElement.textContent = professionInput.value;
 
   const popup = editProfileForm.closest(".popup");
-  
+
   closePopup(popup);
 });
 
 // Добавление на страницу первоначальной карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-primalCards.forEach(function(cardData) {
+primalCards.forEach(function (cardData) {
   addCard(cards, createCard(cardData.link, cardData.name));
 });
 
 // Добавление на страницу новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-addCardForm.addEventListener("submit", function(event) {
-  event.preventDefault();
+addCardForm.addEventListener("submit", function (evt) {
+  evt.preventDefault();
   addCard(cards, createCard(picInput.value, titleInput.value));
   closePopup(addCardPopup);
 });
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ МНЕ ТАК ХОЧЕТСЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+document.addEventListener('contextmenu', evt => {
+  evt.preventDefault();
+})

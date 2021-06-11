@@ -8,6 +8,7 @@
   top: 0;
   overflow: hidden;
   visibility: hidden;
+  transition: visibility .3s, opacity .3s ease-in;
   opacity: 0;
   background-color: rgba(0, 0, 0, 0.5);
   margin: 0;

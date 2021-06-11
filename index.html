@@ -50,10 +50,14 @@
     <div class="popup popup_type_edit-profile">
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="Данные пользователя" class="popup__form popup__form_type_edit-profile">
-          <fieldset class="popup__input">
-            <input required placeholder="Ваше имя" type="text" name="Имя" class="popup__form-item popup__form-item_text_full-name" />
-            <input required placeholder="Ваша профессия" type="text" name="Профессия" class="popup__form-item popup__form-item_text_profession" />
+        <form name="Данные пользователя" class="popup__form popup__form_type_edit-profile" novalidate autocomplete="off">
+          <fieldset class="popup__fieldset">
+            <input id="name-input" class="popup__input popup__input_text_full-name" placeholder="Ваше имя"
+              type="text" name="name" required minlength="2" maxlength="40" autocomplete="off" />
+            <span class="name-input-error popup__error"></span>
+            <input id="about-you-input" class="popup__input popup__input_text_profession" placeholder="Ваша профессия"
+            type="text" name="about-you" required minlength="2" maxlength="200" autocomplete="off" />
+            <span class="about-you-input-error popup__error"></span>
           </fieldset>
           <button type="submit" class="popup__button-save popup__button-save-profile">
             Сохранить
@@ -67,12 +71,14 @@
     <div class="popup popup_type_add-card">
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
-        <form name="Данные пользователя" class="popup__form popup__form_type_add-card">
-          <fieldset class="popup__input">
-            <input required placeholder="Название" type="text" name="Название"
-              class="popup__form-item popup__form-item_text_title" />
-            <input required placeholder="Ссылка на картинку" type="url" name="Ссылка на картинку"
-              class="popup__form-item popup__form-item_url_pic" />
+        <form name="Данные пользователя" class="popup__form popup__form_type_add-card" novalidate autocomplete="off">
+          <fieldset class="popup__fieldset">
+            <input id="title-pic-input" class="popup__input popup__input_text_title" placeholder="Название места"
+            type="text" name="title-pic" required minlength="2" maxlength="30" autocomplete="off" />
+            <span class="title-pic-input-error popup__error"></span>
+            <input id="url-pic-input" class="popup__input popup__input_url_pic" placeholder="Ссылка на картинку" 
+            type="url" name="url-pic" required autocomplete="off" />
+            <span class="url-pic-input-error popup__error"></span>
           </fieldset>
           <button type="submit" class="popup__button-save popup__button-save-card">
             Создать
@@ -108,6 +114,7 @@
   </template>
   <script src="./scripts/primal-сards.js"></script>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/validation.js"></script>
 </body>
 
 </html>

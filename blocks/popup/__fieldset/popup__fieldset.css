@@ -1,0 +1,12 @@
+.popup__fieldset {
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 17px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
