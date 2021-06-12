@@ -50,7 +50,7 @@
     <div class="popup popup_type_edit-profile">
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="Данные пользователя" class="popup__form popup__form_type_edit-profile" novalidate
+        <form name="form-profile" class="popup__form popup__form_type_edit-profile" novalidate
           autocomplete="off">
           <fieldset class="popup__fieldset">
             <input id="name-input" class="popup__input popup__input_text_full-name" placeholder="Ваше имя" type="text"
@@ -72,7 +72,7 @@
     <div class="popup popup_type_add-card">
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
-        <form name="Данные пользователя" class="popup__form popup__form_type_add-card" novalidate autocomplete="off">
+        <form name="form-add-card" class="popup__form popup__form_type_add-card" novalidate autocomplete="off">
           <fieldset class="popup__fieldset">
             <input id="title-pic-input" class="popup__input popup__input_text_title" placeholder="Название места"
               type="text" name="title-pic" required minlength="2" maxlength="30" autocomplete="off" />
@@ -92,7 +92,7 @@
     </div>
     <div class="popup popup_type_pic">
       <div class="popup__pic-container">
-        <img class="popup__pic" alt="Изображение отсутствует" src="Изображение отсутствует"/>
+        <img class="popup__pic" alt="Изображение отсутствует" src="#"/>
         <h2 class="popup__pic-title"></h2>
         <button type="button" aria-label="Закрыть картинку" class="popup__button-close">
           <img src="./images/button-сlose.svg" alt="Закрыть окно" class="popup__button-close-img" />
@@ -113,6 +113,7 @@
       </div>
     </li>
   </template>
+  <script src="./scripts/variables.js"></script>
   <script src="./scripts/primal-сards.js"></script>
   <script src="./scripts/script.js"></script>
   <script src="./scripts/validation.js"></script>

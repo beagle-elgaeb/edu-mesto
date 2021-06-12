@@ -1,34 +1,4 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~ ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-const popups = document.querySelectorAll(".popup");
-const closePopupButtons = document.querySelectorAll(".popup__button-close");
-const escape = "Escape";
-
-// Попап редактирования профиля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const editProfilePopup = document.querySelector(".popup_type_edit-profile");
-const editProfileForm = document.querySelector(".popup__form_type_edit-profile");
-const editProfileButton = document.querySelector(".profile__button-edit");
-const fullNameElement = document.querySelector(".profile__info-full-name");
-const professionElement = document.querySelector(".profile__info-profession");
-const fullNameInput = document.querySelector(".popup__input_text_full-name");
-const professionInput = document.querySelector(".popup__input_text_profession");
-
-// Попап добавления карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const addCardPopup = document.querySelector(".popup_type_add-card");
-const addCardForm = document.querySelector(".popup__form_type_add-card");
-const addCardButton = document.querySelector(".profile__button-add-card");
-const picInput = document.querySelector(".popup__input_url_pic");
-const titleInput = document.querySelector(".popup__input_text_title");
-
-// Карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const cardTemplate = document.querySelector("#card-template").content;
-const cardForClone = cardTemplate.querySelector(".card");
-const cards = document.querySelector(".photo-gallery__cards");
-const picPopup = document.querySelector(".popup_type_pic");
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ОБЪЯВЛЕНИЕ ФУНКЦИЙ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -49,7 +19,7 @@ function closePopup(popup) {
 // Закрытие popup по esc ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function closePopupEsc(evt) {
-  if (evt.key === escape) {
+  if (evt.key === ESC) {
     const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
@@ -57,14 +27,16 @@ function closePopupEsc(evt) {
 
 // Создание карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+function getPhotoOfCard(card) {
+  return card.querySelector(".card__photo");;
+}
+
 function createCard(pic, title) {
   // Клонирование карточки
   const card = cardForClone.cloneNode(true);
 
   const cardTitleElement = card.querySelector(".card__title");
-  const popupTitleElement = picPopup.querySelector(".popup__pic-title");
   const cardPhotoElement = card.querySelector(".card__photo");
-  const popupPhotoElement = picPopup.querySelector(".popup__pic");
   const likeCardButtons = card.querySelector(".card__button-like");
   const deleteCardButtons = card.querySelector(".card__button-delete");
 
@@ -101,7 +73,7 @@ function addCard(cards, card) {
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ОБРАБОТЧИКИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ СЛУШАТЕЛИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Открытие popup редактирования профиля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -110,10 +82,13 @@ editProfileButton.addEventListener("click", function () {
   fullNameInput.value = fullNameElement.textContent;
   professionInput.value = professionElement.textContent;
 
-  const fullNameEvent = new Event("input");
-  fullNameInput.dispatchEvent(fullNameEvent);
-  const professionEvent = new Event("input");
-  professionInput.dispatchEvent(professionEvent);
+  // const fullNameEvent = new Event("input");
+  // fullNameInput.dispatchEvent(fullNameEvent);
+  // const professionEvent = new Event("input");
+  // professionInput.dispatchEvent(professionEvent);
+
+  hideInputError(editProfileForm, fullNameInput, selectors);
+  hideInputError(editProfileForm, professionInput, selectors); 
 
   openPopup(editProfilePopup);
 });
@@ -121,9 +96,10 @@ editProfileButton.addEventListener("click", function () {
 // Открытие popup новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 addCardButton.addEventListener("click", function () {
-  addCardForm.reset();
-
   openPopup(addCardPopup);
+
+  hideInputError(addCardForm, picInput, selectors);
+  hideInputError(addCardForm, titleInput, selectors);  
 });
 
 // Закрытие popup  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,9 +141,7 @@ editProfileForm.addEventListener("submit", function (evt) {
   fullNameElement.textContent = fullNameInput.value;
   professionElement.textContent = professionInput.value;
 
-  const popup = editProfileForm.closest(".popup");
-
-  closePopup(popup);
+  closePopup(editProfilePopup);
 });
 
 // Добавление на страницу первоначальной карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -180,8 +154,14 @@ primalCards.forEach(function (cardData) {
 
 addCardForm.addEventListener("submit", function (evt) {
   evt.preventDefault();
+  
+  const submitButton = addCardForm.querySelector(selectors.submitButtonSelector);
+  submitButton.classList.add(selectors.inactiveButtonClass);
+  submitButton.setAttribute("disabled", "true");
+  
   addCard(cards, createCard(picInput.value, titleInput.value));
   closePopup(addCardPopup);
+  addCardForm.reset();
 });
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
