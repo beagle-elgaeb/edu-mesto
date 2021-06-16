@@ -155,7 +155,6 @@ primalCards.forEach(function (cardData) {
 addCardForm.addEventListener("submit", function (evt) {
   evt.preventDefault();
   
-  const submitButton = addCardForm.querySelector(selectors.submitButtonSelector);
   submitButton.classList.add(selectors.inactiveButtonClass);
   submitButton.setAttribute("disabled", "true");
   

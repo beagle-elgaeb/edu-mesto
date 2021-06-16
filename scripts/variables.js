@@ -19,6 +19,7 @@ const professionInput = document.querySelector(".popup__input_text_profession");
 const addCardPopup = document.querySelector(".popup_type_add-card");
 const addCardForm = document.querySelector(".popup__form_type_add-card");
 const addCardButton = document.querySelector(".profile__button-add-card");
+const submitButton = addCardForm.querySelector(".popup__button-save");
 const picInput = document.querySelector(".popup__input_url_pic");
 const titleInput = document.querySelector(".popup__input_text_title");
 
