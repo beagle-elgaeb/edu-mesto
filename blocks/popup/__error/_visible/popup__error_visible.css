@@ -9,3 +9,9 @@
   margin: 0 auto -5px auto;
   padding-top: 5px;
 }
+
+@media screen and (max-width: 680px) {
+  .popup__error_visible {
+    width: 238px;
+  }
+}

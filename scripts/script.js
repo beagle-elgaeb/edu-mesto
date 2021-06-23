@@ -1,10 +1,60 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ОБЪЯВЛЕНИЕ ФУНКЦИЙ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ ИМПОРТ ПЕРЕМЕННЫХ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+import * as vars from "./variables.js";
+import primalCards from "./primalCards.js";
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ ЗАПУСК ВАЛИДАЦИИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+const formList = Array.from(document.querySelectorAll(vars.selectors.formSelector));
+
+formList.forEach((formElement) => {
+  const validation = new FormValidator(vars.selectors, formElement);
+  validation.enableValidation();
+});
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ СОЗДАНИЕ КАРТОЧКИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// Добавление на страницу первоначальной карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+primalCards.forEach((item) => {
+  const card = new Card({ pic: item.link, title: item.name }, "#card-template");
+  const cardElement = card.cloneTemplate();
+
+  document.querySelector(".photo-gallery__cards").prepend(cardElement);
+});
+
+// Добавление на страницу новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+vars.addCardForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+
+  vars.submitButton.classList.add(vars.selectors.inactiveButtonClass);
+  vars.submitButton.setAttribute("disabled", "true");
+
+  const card = new Card( { pic: vars.picInput.value, title: vars.titleInput.value } , "#card-template");
+  const cardElement = card.cloneTemplate();
+
+  document.querySelector(".photo-gallery__cards").prepend(cardElement);
+
+  closePopup(vars.addCardPopup);
+  vars.addCardForm.reset();
+});
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ ФУНКЦИИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Открытие popup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", closePopupEsc);
 }
@@ -19,87 +69,34 @@ function closePopup(popup) {
 // Закрытие popup по esc ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function closePopupEsc(evt) {
-  if (evt.key === ESC) {
+  if (evt.key === vars.ESC) {
     const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
 }
 
-// Создание карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-function getPhotoOfCard(card) {
-  return card.querySelector(".card__photo");;
-}
-
-function createCard(pic, title) {
-  // Клонирование карточки
-  const card = cardForClone.cloneNode(true);
-
-  const cardTitleElement = card.querySelector(".card__title");
-  const cardPhotoElement = card.querySelector(".card__photo");
-  const likeCardButtons = card.querySelector(".card__button-like");
-  const deleteCardButtons = card.querySelector(".card__button-delete");
-
-  // Заполнение карточки
-  cardPhotoElement.src = pic;
-  cardPhotoElement.alt = title;
-  cardTitleElement.textContent = title;
-
-  // Лайки
-  likeCardButtons.addEventListener("click", function (evt) {
-    evt.target.classList.toggle("card__button-like_active");
-  });
-
-  // Удаление карточки
-  deleteCardButtons.addEventListener("click", function () {
-    card.remove();
-  });
-
-  // Открытие фотографии в попапе
-  cardPhotoElement.addEventListener("click", function () {
-    openPopup(picPopup);
-    popupPhotoElement.src = cardPhotoElement.src;
-    popupPhotoElement.alt = cardTitleElement.textContent
-    popupTitleElement.textContent = cardTitleElement.textContent;
-  });
-
-  return card;
-}
-
-// Добавление на страницу карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-function addCard(cards, card) {
-  cards.prepend(card);
-}
-
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ СЛУШАТЕЛИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ ОБРАБОТЧИКИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Открытие popup редактирования профиля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-editProfileButton.addEventListener("click", function () {
-  fullNameInput.value = fullNameElement.textContent;
-  professionInput.value = professionElement.textContent;
+vars.editProfileButton.addEventListener("click", function () {
+  vars.fullNameInput.value = vars.fullNameElement.textContent;
+  vars.professionInput.value = vars.professionElement.textContent;
 
-  // const fullNameEvent = new Event("input");
-  // fullNameInput.dispatchEvent(fullNameEvent);
-  // const professionEvent = new Event("input");
-  // professionInput.dispatchEvent(professionEvent);
+  const fullNameEvent = new Event("input");
+  vars.fullNameInput.dispatchEvent(fullNameEvent);
+  const professionEvent = new Event("input");
+  vars.professionInput.dispatchEvent(professionEvent);
 
-  hideInputError(editProfileForm, fullNameInput, selectors);
-  hideInputError(editProfileForm, professionInput, selectors); 
-
-  openPopup(editProfilePopup);
+  openPopup(vars.editProfilePopup);
 });
 
 // Открытие popup новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-addCardButton.addEventListener("click", function () {
-  openPopup(addCardPopup);
-
-  hideInputError(addCardForm, picInput, selectors);
-  hideInputError(addCardForm, titleInput, selectors);  
+vars.addCardButton.addEventListener("click", function () {
+  openPopup(vars.addCardPopup);
 });
 
 // Закрытие popup  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,14 +115,14 @@ document.addEventListener("mouseup", function (evt) {
 });
 
 // Закрытие
-popups.forEach(function (popup, i) {
+vars.popups.forEach(function (popup, i) {
 
-  //          по крестику
-  closePopupButtons[i].addEventListener("click", function () {
+  //        по крестику
+  vars.closePopupButtons[i].addEventListener("click", function () {
     closePopup(popup);
   });
 
-  //          по вне
+  //        по вне
   popup.addEventListener("click", function (evt) {
     if (evt.target === evt.currentTarget && mouseDownTarget === mouseUpTarget) {
       closePopup(popup);
@@ -135,32 +132,13 @@ popups.forEach(function (popup, i) {
 
 // Сохранение профайла ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-editProfileForm.addEventListener("submit", function (evt) {
+vars.editProfileForm.addEventListener("submit", function (evt) {
   evt.preventDefault();
 
-  fullNameElement.textContent = fullNameInput.value;
-  professionElement.textContent = professionInput.value;
+  vars.fullNameElement.textContent = vars.fullNameInput.value;
+  vars.professionElement.textContent = vars.professionInput.value;
 
-  closePopup(editProfilePopup);
-});
-
-// Добавление на страницу первоначальной карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-primalCards.forEach(function (cardData) {
-  addCard(cards, createCard(cardData.link, cardData.name));
-});
-
-// Добавление на страницу новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-addCardForm.addEventListener("submit", function (evt) {
-  evt.preventDefault();
-  
-  submitButton.classList.add(selectors.inactiveButtonClass);
-  submitButton.setAttribute("disabled", "true");
-  
-  addCard(cards, createCard(picInput.value, titleInput.value));
-  closePopup(addCardPopup);
-  addCardForm.reset();
+  closePopup(vars.editProfilePopup);
 });
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
