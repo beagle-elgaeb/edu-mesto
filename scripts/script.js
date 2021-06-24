@@ -28,6 +28,9 @@ primalCards.forEach((item) => {
   const card = new Card({ pic: item.link, title: item.name }, "#card-template", openPic);
   const cardElement = card.generateCard();
 
+
+  
+
   document.querySelector(".photo-gallery__cards").prepend(cardElement);
 });
 
@@ -79,9 +82,9 @@ function openPopup(popup) {
 // Открытие popup с фото из карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function openPic(pic, title) {
-  document.querySelector(".popup_type_pic").querySelector(".popup__pic").src = pic.src;
-  document.querySelector(".popup_type_pic").querySelector(".popup__pic-title").alt = title.textContent;
-  document.querySelector(".popup_type_pic").querySelector(".popup__pic-title").textContent = title.textContent;
+  document.querySelector(".popup_type_pic").querySelector(".popup__pic").src = pic;
+  document.querySelector(".popup_type_pic").querySelector(".popup__pic-title").alt = title;
+  document.querySelector(".popup_type_pic").querySelector(".popup__pic-title").textContent = title;
 
   openPopup(vars.openPicPopup);
 }

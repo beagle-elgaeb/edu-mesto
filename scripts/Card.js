@@ -18,7 +18,11 @@ export default class Card {
     this._titleElement = this._element.querySelector(".card__title");
     this._likeButton = this._element.querySelector(".card__button-like");
     this._deleteButton = this._element.querySelector(".card__button-delete");
-
+  
+    this._picElement.src = this._pic;
+    this._picElement.alt = this._title;
+    this._titleElement.textContent = this._title;
+ 
     this._picElement.addEventListener("click", this._handleOpenCard);
     this._likeButton.addEventListener("click", this._handleLikeCard);
     this._deleteButton.addEventListener("click", this._handleDeleteCard);
@@ -27,7 +31,7 @@ export default class Card {
   }
 
   // Клонирование карточки
-  _cloneTemplate() {
+  _cloneTemplate = () => {
     const cardElement = document
       .querySelector(this._cardTemplate)
       .content
