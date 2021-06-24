@@ -7,10 +7,12 @@ export default class FormValidator {
   constructor(selectors, formElement) {
     this._selectors = selectors;
     this._formElement = formElement;
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._selectors.inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._selectors.submitButtonSelector); 
   }
 
  // Функция запуска валидации ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  enableValidation = () => {
+  enableValidation() {
     this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
@@ -18,7 +20,7 @@ export default class FormValidator {
   }
 
   // Добавление класса ошибки, сообщение об ошибке ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  _showInputError = (inputElement, errorMessage) => {
+  _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
 
     inputElement.classList.add(this._selectors.inputErrorClass);
@@ -27,7 +29,7 @@ export default class FormValidator {
   };
 
   // Удаление класса ошибки, очистка сообщения об ошибке ~~~~~~~~~~~~~~~~~~~~~~~~
-  _hideInputError = (inputElement) => {
+  _hideInputError(inputElement) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
 
     inputElement.classList.remove(this._selectors.inputErrorClass);
@@ -36,7 +38,7 @@ export default class FormValidator {
   };
 
   // Проверка валидности полей ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  _isValid = (inputElement) => {
+  _isValid(inputElement) {
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement, inputElement.validationMessage);
     } else {
@@ -45,34 +47,31 @@ export default class FormValidator {
   };
 
   // Проверка наличия невалидного поля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  _hasInvalidInput = (inputList) => {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     })
   };
 
   // Смена активности кнопки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  _toggleButtonState = (inputList, buttonElement) => {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._selectors.inactiveButtonClass);
-      buttonElement.setAttribute("disabled", "true");
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._buttonElement.classList.add(this._selectors.inactiveButtonClass);
+      this._buttonElement.setAttribute("disabled", "true");
     } else {
-      buttonElement.classList.remove(this._selectors.inactiveButtonClass);
-      buttonElement.removeAttribute("disabled");
+      this._buttonElement.classList.remove(this._selectors.inactiveButtonClass);
+      this._buttonElement.removeAttribute("disabled");
     }
   };
 
   // Слушатели событий ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  _setEventListeners = () => {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._selectors.inputSelector));
-    const buttonElement = this._formElement.querySelector(this._selectors.submitButtonSelector);
+  _setEventListeners() {
+    this._toggleButtonState();
 
-    this._toggleButtonState(inputList, buttonElement);
-
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._isValid(inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState();
       });
     });
   };

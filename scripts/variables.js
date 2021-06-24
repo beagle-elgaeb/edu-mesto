@@ -23,6 +23,9 @@ export const submitButton = addCardForm.querySelector(".popup__button-save");
 export const picInput = document.querySelector(".popup__input_url_pic");
 export const titleInput = document.querySelector(".popup__input_text_title");
 
+// Попап демонстрации картинки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+export const openPicPopup = document.querySelector(".popup_type_pic");
+
 // Передаваемые классы ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export const selectors = {
   formSelector: ".popup__form",

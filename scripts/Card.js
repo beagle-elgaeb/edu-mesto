@@ -2,58 +2,53 @@
 // ~~~~~~~~~~ СОЗДАНИЕ КАРТОЧКИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-import { openPopup } from "./script.js";
-
 export default class Card {
-  constructor(data, cardTemplate) {
-    this._title = data.title;
+  constructor(data, cardTemplate, handleOpenPopup) {
     this._pic = data.pic;
+    this._title = data.title;
     this._cardTemplate = cardTemplate;
+    this._handleOpenPopup = handleOpenPopup;
   }
 
-  // Клонирование и заполнение карточки
-  cloneTemplate() {
+  // Заполнение карточки
+  generateCard() {
+    this._element = this._cloneTemplate();
 
+    this._picElement = this._element.querySelector(".card__photo");
+    this._titleElement = this._element.querySelector(".card__title");
+    this._likeButton = this._element.querySelector(".card__button-like");
+    this._deleteButton = this._element.querySelector(".card__button-delete");
+
+    this._picElement.addEventListener("click", this._handleOpenCard);
+    this._likeButton.addEventListener("click", this._handleLikeCard);
+    this._deleteButton.addEventListener("click", this._handleDeleteCard);
+
+    return this._element;
+  }
+
+  // Клонирование карточки
+  _cloneTemplate() {
     const cardElement = document
-    .querySelector(this._cardTemplate)
-    .content
-    .querySelector('.card')
-    .cloneNode(true);
-  
-    this._element = cardElement;
-
-    this._element.querySelector(".card__photo").src = this._pic;
-    this._element.querySelector(".card__photo").alt = this._title;
-    this._element.querySelector(".card__title").textContent = this._title;
-
-    this._openCard()
-    this._likeCard()
-    this._deleteCard()
+      .querySelector(this._cardTemplate)
+      .content
+      .querySelector('.card')
+      .cloneNode(true);
 
     return cardElement;
   }
 
   // Открытие карточки
-  _openCard() {
-    this._element.querySelector(".card__photo").addEventListener("click", () => {
-      openPopup(document.querySelector(".popup_type_pic"));
-      document.querySelector(".popup_type_pic").querySelector(".popup__pic").src = this._element.querySelector(".card__photo").src;
-      document.querySelector(".popup_type_pic").querySelector(".popup__pic-title").alt = this._element.querySelector(".popup__pic-title").textContent;
-      document.querySelector(".popup_type_pic").querySelector(".popup__pic-title").textContent = this._element.querySelector(".popup__pic-title").textContent;
-    });
+  _handleOpenCard = () => {
+    this._handleOpenPopup(this._pic, this._title);
   }
 
   // Лайки
-  _likeCard() {
-    this._element.querySelector(".card__button-like").addEventListener("click", (evt) => {
-      evt.target.classList.toggle("card__button-like_active");
-    });
+  _handleLikeCard = (evt) => {
+    evt.target.classList.toggle("card__button-like_active");
   }
 
   // Удаление карточки
-  _deleteCard() {
-    this._element.querySelector(".card__button-delete").addEventListener("click", (evt) => {
-      evt.target.closest(".card").remove();
-    });
+  _handleDeleteCard = () => {
+    this._element.remove();
   }
 }
