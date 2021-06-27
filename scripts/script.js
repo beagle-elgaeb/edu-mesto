@@ -25,13 +25,7 @@ formList.forEach((formElement) => {
 // Добавление на страницу первоначальной карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 primalCards.forEach((item) => {
-  const card = new Card({ pic: item.link, title: item.name }, "#card-template", openPic);
-  const cardElement = card.generateCard();
-
-
-  
-
-  document.querySelector(".photo-gallery__cards").prepend(cardElement);
+  addCard ({ pic: item.link, title: item.name });
 });
 
 // Добавление на страницу новой карточки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,10 +36,7 @@ vars.addCardForm.addEventListener("submit", (evt) => {
   vars.submitButton.classList.add(vars.selectors.inactiveButtonClass);
   vars.submitButton.setAttribute("disabled", "true");
 
-  const card = new Card({ pic: vars.picInput.value, title: vars.titleInput.value }, "#card-template", openPic);
-  const cardElement = card.generateCard();
-
-  document.querySelector(".photo-gallery__cards").prepend(cardElement);
+  addCard ({ pic: vars.picInput.value, title: vars.titleInput.value });
 
   closePopup(vars.addCardPopup);
   vars.addCardForm.reset();
@@ -111,6 +102,15 @@ function closePopupEsc(evt) {
   }
 }
 
+// Добавление карточки на страницу ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+function addCard (data) {
+  const card = new Card(data, "#card-template", openPic);
+  const cardElement = card.generateCard();
+
+  document.querySelector(".photo-gallery__cards").prepend(cardElement);
+}
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~ ОБРАБОТЧИКИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -146,10 +146,6 @@ vars.popups.forEach(function (popup, i) {
   });
 
   //        по вне
-  // если реализовать не для "click", а для "mousedown",
-  // и убрать "&& mouseDownTarget === mouseUpTarget",
-  // то закрывается, если нажать вне и неотжимая провести внутрь,
-  // пользователь может передумать закрывать, так что лучше оставлю так
   popup.addEventListener("click", function (evt) {
     if (evt.target === evt.currentTarget && mouseDownTarget === mouseUpTarget) {
       closePopup(popup);
@@ -172,6 +168,6 @@ vars.editProfileForm.addEventListener("submit", function (evt) {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ МНЕ ТАК ХОЧЕТСЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// document.addEventListener('contextmenu', evt => {
-//   evt.preventDefault();
-// })
+document.addEventListener("contextmenu", evt => {
+  evt.preventDefault();
+})

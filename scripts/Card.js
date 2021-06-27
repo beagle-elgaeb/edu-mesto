@@ -3,11 +3,11 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export default class Card {
-  constructor(data, cardTemplate, handleOpenPopup) {
+  constructor(data, cardTemplate, getOpenPopup) {
     this._pic = data.pic;
     this._title = data.title;
     this._cardTemplate = cardTemplate;
-    this._handleOpenPopup = handleOpenPopup;
+    this._getOpenPopup = getOpenPopup;
   }
 
   // Заполнение карточки
@@ -43,7 +43,7 @@ export default class Card {
 
   // Открытие карточки
   _handleOpenCard = () => {
-    this._handleOpenPopup(this._pic, this._title);
+    this._getOpenPopup(this._pic, this._title);
   }
 
   // Лайки
