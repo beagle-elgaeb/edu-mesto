@@ -2,7 +2,7 @@
 // ~~~~~~~~~~ ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПОВ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-import { ESC } from "./variables.js";
+import { ESC } from "../utils/variables.js";
 
 export default class Popup {
   constructor(popupSelector) {
