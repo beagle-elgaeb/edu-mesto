@@ -1,0 +1,10 @@
+.profile__info-full-name-and-button-edit {
+  display: flex;
+  align-items: flex-end;
+}
+
+@media screen and (max-width: 680px) {
+  .profile__info-full-name-and-button-edit {
+    margin: 26px auto 0;
+  }
+}
