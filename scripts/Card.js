@@ -10,7 +10,6 @@ export default class Card {
     this._getOpenPopup = getOpenPopup;
   }
 
-  // Заполнение карточки
   generateCard() {
     this._element = this._cloneTemplate();
 
@@ -30,7 +29,6 @@ export default class Card {
     return this._element;
   }
 
-  // Клонирование карточки
   _cloneTemplate = () => {
     const cardElement = document
       .querySelector(this._cardTemplate)
@@ -41,17 +39,14 @@ export default class Card {
     return cardElement;
   }
 
-  // Открытие карточки
   _handleOpenCard = () => {
     this._getOpenPopup(this._pic, this._title);
   }
 
-  // Лайки
   _handleLikeCard = (evt) => {
     evt.target.classList.toggle("card__button-like_active");
   }
 
-  // Удаление карточки
   _handleDeleteCard = () => {
     this._element.remove();
   }

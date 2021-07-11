@@ -24,13 +24,13 @@
           <div class="profile__avatar"></div>
           <div class="profile__info">
             <div class="profile__info-full-name-and-button-edit">
-              <h1 class="profile__info-full-name">Владимир Ульянов</h1>
+              <h1 id="fullName" class="profile__info-full-name">Владимир Ульянов</h1>
               <button type="button" aria-label="Изменить" class="profile__button-edit">
                 <img src="./images/button-edit.svg" alt="Кнопка редактирования профиля"
                   class="profile__button-edit-img" />
               </button>
             </div>
-            <p class="profile__info-profession">Памятник</p>
+            <p id="profession" class="profile__info-profession">Памятник</p>
           </div>
           <button type="button" aria-label="Добавить фото" class="profile__button-add-card">
             <img src="./images/button-add.svg" alt="Кнопка добавления места" class="profile__button-add-card-img" />
@@ -55,10 +55,10 @@
           autocomplete="off">
           <fieldset class="popup__fieldset">
             <input id="name-input" class="popup__input popup__input_text_full-name" placeholder="Ваше имя" type="text"
-              name="name" required minlength="2" maxlength="40" autocomplete="off" />
+              name="fullName" required minlength="2" maxlength="40" autocomplete="off" />
             <span class="name-input-error popup__error"></span>
             <input id="about-you-input" class="popup__input popup__input_text_profession" placeholder="Ваша профессия"
-              type="text" name="about-you" required minlength="2" maxlength="200" autocomplete="off" />
+              type="text" name="profession" required minlength="2" maxlength="200" autocomplete="off" />
             <span class="about-you-input-error popup__error"></span>
           </fieldset>
           <button type="submit" class="popup__button-save popup__button-save-profile">
@@ -76,10 +76,10 @@
         <form name="form-add-card" class="popup__form popup__form_type_add-card" novalidate autocomplete="off">
           <fieldset class="popup__fieldset">
             <input id="title-pic-input" class="popup__input popup__input_text_title" placeholder="Название места"
-              type="text" name="title-pic" required minlength="2" maxlength="30" autocomplete="off" />
+              type="text" name="title" required minlength="2" maxlength="30" autocomplete="off" />
             <span class="title-pic-input-error popup__error"></span>
             <input id="url-pic-input" class="popup__input popup__input_url_pic" placeholder="Ссылка на картинку"
-              type="url" name="url-pic" required autocomplete="off" />
+              type="url" name="pic" required autocomplete="off" />
             <span class="url-pic-input-error popup__error"></span>
           </fieldset>
           <button type="submit" class="popup__button-save popup__button-save-card">

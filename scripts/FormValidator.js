@@ -1,5 +1,5 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ВАЛИДАЦИЯ ФОРМ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ ВАЛИДАЦИЯ ФОРМ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export default class FormValidator {
@@ -11,7 +11,6 @@ export default class FormValidator {
     this._buttonElement = this._formElement.querySelector(this._selectors.submitButtonSelector); 
   }
 
- // Функция запуска валидации ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   enableValidation() {
     this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
@@ -19,7 +18,6 @@ export default class FormValidator {
     this._setEventListeners();
   }
 
-  // Добавление класса ошибки, сообщение об ошибке ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
 
@@ -28,7 +26,6 @@ export default class FormValidator {
     errorElement.textContent = errorMessage;
   };
 
-  // Удаление класса ошибки, очистка сообщения об ошибке ~~~~~~~~~~~~~~~~~~~~~~~~
   _hideInputError(inputElement) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
 
@@ -37,7 +34,6 @@ export default class FormValidator {
     errorElement.textContent = "";
   };
 
-  // Проверка валидности полей ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   _isValid(inputElement) {
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement, inputElement.validationMessage);
@@ -46,14 +42,12 @@ export default class FormValidator {
     }
   };
 
-  // Проверка наличия невалидного поля ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   _hasInvalidInput() {
     return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     })
   };
 
-  // Смена активности кнопки ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._selectors.inactiveButtonClass);
@@ -64,7 +58,6 @@ export default class FormValidator {
     }
   };
 
-  // Слушатели событий ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   _setEventListeners() {
     this._toggleButtonState();
 
