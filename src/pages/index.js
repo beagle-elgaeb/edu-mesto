@@ -13,25 +13,24 @@ import UserInfo from "../scripts/components/UserInfo.js";
 import FormValidator from "../scripts/components/FormValidator.js";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~ ЗАПУСК ВАЛИДАЦИИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-const formList = Array.from(document.querySelectorAll(vars.selectors.formSelector));
-
-formList.forEach((formElement) => {
-  const validation = new FormValidator(vars.selectors, formElement);
-  validation.enableValidation();
-});
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~ КАРТОЧКИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function addCard(data) {
+function createCard(data) {
   const card = new Card(data, "#card-template", (pic, title) => popupWithPic.open(pic, title));
-  const cardElement = card.generateCard();
+
+  return card.generateCard();
+}
+
+function addCard(data) {
+  const cardElement = createCard(data);
+  
   сardList.addItem(cardElement);
 }
+
+const validationAddCard = new FormValidator(vars.selectors, vars.addCardForm);
+
+validationAddCard.enableValidation();
 
 const сardList = new Section(
   {
@@ -46,9 +45,6 @@ const сardList = new Section(
 const popupAddCard = new PopupWithForm(".popup_type_add-card",
   {
     submitForm: (inputsObject) => {
-      vars.submitButton.classList.add(vars.selectors.inactiveButtonClass);
-      vars.submitButton.setAttribute("disabled", "true");
-
       addCard(inputsObject);
     }
   }
@@ -72,6 +68,10 @@ popupWithPic.setEventListeners();
 // ~~~~~~~~~~ ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+const validationPopupProfile = new FormValidator(vars.selectors, vars.editProfileForm);
+
+validationPopupProfile.enableValidation();
+
 const popupProfile = new PopupWithForm(".popup_type_edit-profile",
   {
     submitForm: (inputsObject) => {
@@ -92,10 +92,7 @@ vars.editProfileButton.addEventListener("click", () => {
   vars.fullNameInput.value = profileInfo.getUserInfo().fullName;
   vars.professionInput.value = profileInfo.getUserInfo().profession;
 
-  const fullNameEvent = new Event("input");
-  vars.fullNameInput.dispatchEvent(fullNameEvent);
-  const professionEvent = new Event("input");
-  vars.professionInput.dispatchEvent(professionEvent);
+  validationPopupProfile.resetValidation();
 
   popupProfile.open();
 });
@@ -106,6 +103,6 @@ popupProfile.setEventListeners();
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ МНЕ ТАК ХОЧЕТСЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-document.addEventListener("contextmenu", evt => {
-  evt.preventDefault();
-})
+// document.addEventListener("contextmenu", evt => {
+//   evt.preventDefault();
+// })

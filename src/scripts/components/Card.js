@@ -22,9 +22,7 @@ export default class Card {
     this._picElement.alt = this._title;
     this._titleElement.textContent = this._title;
  
-    this._picElement.addEventListener("click", this._handleOpenCard);
-    this._likeButton.addEventListener("click", this._handleLikeCard);
-    this._deleteButton.addEventListener("click", this._handleDeleteCard);
+    this._setEventListeners();
 
     return this._element;
   }
@@ -37,6 +35,12 @@ export default class Card {
       .cloneNode(true);
 
     return cardElement;
+  }
+
+  _setEventListeners = () => {
+    this._picElement.addEventListener("click", this._handleOpenCard);
+    this._likeButton.addEventListener("click", this._handleLikeCard);
+    this._deleteButton.addEventListener("click", this._handleDeleteCard);
   }
 
   _handleOpenCard = () => {

@@ -2,8 +2,6 @@
 // ~~~~~~~~~~ ОТКРЫТИЕ И ЗАКРЫТИЕ ПОПАПОВ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-import { ESC } from "../utils/variables.js";
-
 export default class Popup {
   constructor(popupSelector) {
     this._popupSelector = popupSelector;
@@ -32,7 +30,7 @@ export default class Popup {
   }
 
   _handleEscClose = (evt) => {
-    if (evt.key === ESC) {
+    if (evt.key === "Escape") {
       this.close();
     }
   }
