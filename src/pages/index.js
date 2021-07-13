@@ -92,8 +92,6 @@ vars.editProfileButton.addEventListener("click", () => {
   vars.fullNameInput.value = profileInfo.getUserInfo().fullName;
   vars.professionInput.value = profileInfo.getUserInfo().profession;
 
-  validationPopupProfile.resetValidation();
-
   popupProfile.open();
 });
 

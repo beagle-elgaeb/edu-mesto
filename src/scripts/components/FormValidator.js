@@ -11,14 +11,6 @@ export default class FormValidator {
     this._buttonElement = this._formElement.querySelector(this._selectors.submitButtonSelector);
   }
 
-  resetValidation() {
-    this._toggleButtonState();
-
-    this._inputList.forEach((inputElement) => {
-      this._hideInputError(inputElement);
-    });
-  }
-
   enableValidation() {
     this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
