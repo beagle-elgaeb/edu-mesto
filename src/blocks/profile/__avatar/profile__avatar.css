@@ -1,12 +1,10 @@
 .profile__avatar {
   width: 120px;
   height: 120px;
-  border-radius: 60px;
-  overflow: hidden;
-  background: url(../../../images/profile-photo.jpg);
-  background-size: cover;
-  background-position: center;
-  margin: 0 30px 0 0;
+  object-fit: cover;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 980px) {

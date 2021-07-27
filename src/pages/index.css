@@ -1,4 +1,4 @@
-/* Глобальные */
+/* Global */
 @import url(../vendor/normalize.css);                                   /* Нормализация стилей */
 @import url("../vendor/fonts/inter.css");                               /* Шрифты */
 @import url(../blocks/body/body.css);                                   /* Вся страница */
@@ -10,12 +10,14 @@
 @import url(../blocks/list/list.css);                                   /* Списки */
   @import url(../blocks/list/__item/list__item.css);
 
-/* Шапка */
+/* Header */
 @import url(../blocks/header/header.css);
 
-/* Профиль */
+/* Profile */
 @import url(../blocks/profile/profile.css);
   @import url(../blocks/profile/__avatar/profile__avatar.css);
+  @import url(../blocks/profile/__button-edit-avatar/profile__button-edit-avatar.css);
+  @import url(../blocks/profile/__button-edit-avatar-overlay/profile__button-edit-avatar-overlay.css);
   @import url(../blocks/profile/__info/profile__info.css);
   @import url(../blocks/profile/__info-full-name-and-button-edit/profile__info-full-name-and-button-edit.css);
   @import url(../blocks/profile/__info-full-name/profile__info-full-name.css);
@@ -25,26 +27,29 @@
   @import url(../blocks/profile/__button-add-card/profile__button-add-card.css);
   @import url(../blocks/profile/__button-add-card-img/profile__button-add-card-img.css);
 
-/* Галерея */
+/* Gallery */
 @import url(../blocks/photo-gallery/photo-gallery.css);
   @import url(../blocks/photo-gallery/__cards/photo-gallery__cards.css);
   @import url(../blocks/photo-gallery/__card/photo-gallery__card.css);
 
-/* Карточка */
+/* Cards */
 @import url(../blocks/card/card.css);
   @import url(../blocks/card/__button-delete/card__button-delete.css);
+  @import url(../blocks/card/__button-delete/_disabled/card__button-delete_disabled.css);
   @import url(../blocks/card/__button-delete-img/card__button-delete-img.css);
   @import url(../blocks/card/__photo/card__photo.css);
   @import url(../blocks/card/__title-and-like/card__title-and-like.css);
   @import url(../blocks/card/__title/card__title.css);
   @import url(../blocks/card/__button-like/card__button-like.css);
-  @import url(../blocks/card/__button-like/_active/card__button-like_active.css);
+  @import url(../blocks/card/__button-like-img/card__button-like-img.css);
+  @import url(../blocks/card/__button-like-img/_active/card__button-like-img_active.css);
+  @import url(../blocks/card/__button-like-count/card__button-like-count.css);
 
-/* Ноги */
+/* Footer */
 @import url(../blocks/footer/footer.css);
   @import url(../blocks/footer/__copyright/footer__copyright.css);
 
-/* Форма */
+/* Popups */
 @import url(../blocks/popup/popup.css);
   @import url(../blocks/popup/_opened/popup_opened.css);
   @import url(../blocks/popup/__container/popup__container.css);
@@ -55,11 +60,10 @@
     @import url(../blocks/popup/__input/_type/popup__input_type_error.css);
   @import url(../blocks/popup/__button-save/popup__button-save.css);
     @import url(../blocks/popup/__button-save/_disabled/popup__button-save_disabled.css);
+  @import url(../blocks/popup/__button-delete/popup__button-delete.css);
   @import url(../blocks/popup/__button-close/popup__button-close.css);
   @import url(../blocks/popup/__button-close-img/popup__button-close-img.css);
     @import url(../blocks/popup/__error/_visible/popup__error_visible.css);
-
-/* Просмотр фото */
   @import url(../blocks/popup/__pic-container/popup__pic-container.css);
   @import url(../blocks/popup/__pic/popup__pic.css);
   @import url(../blocks/popup/__pic-title/popup__pic-title.css);

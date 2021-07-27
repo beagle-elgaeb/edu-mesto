@@ -18,20 +18,22 @@
       </header>
       <main class="content">
         <section class="profile">
-          <div class="profile__avatar"></div>
+          <button class="profile__button-edit-avatar profile__button-edit-avatar-overlay">
+            <img class="profile__avatar" src="" alt="Фото профиля" />
+          </button>
           <div class="profile__info">
             <div class="profile__info-full-name-and-button-edit">
-              <h1 id="fullName" class="profile__info-full-name">Владимир Ульянов</h1>
-              <button type="button" aria-label="Изменить" class="profile__button-edit">
-                <img src="<%=require('./images/button-edit.svg')%>" alt="Кнопка редактирования профиля"
-                  class="profile__button-edit-img" />
+              <h1 id="fullName" class="profile__info-full-name"></h1>
+              <button class="profile__button-edit" type="button" aria-label="Изменить">
+                <img class="profile__button-edit-img" src="<%=require('./images/button-edit.svg')%>"
+                  alt="Кнопка редактирования профиля" />
               </button>
             </div>
-            <p id="profession" class="profile__info-profession">Памятник</p>
+            <p id="profession" class="profile__info-profession"></p>
           </div>
           <button type="button" aria-label="Добавить фото" class="profile__button-add-card">
-            <img src="<%=require('./images/button-add.svg')%>" alt="Кнопка добавления места"
-              class="profile__button-add-card-img" />
+            <img class="profile__button-add-card-img" src="<%=require('./images/button-add.svg')%>"
+              alt="Кнопка добавления места" />
           </button>
         </section>
         <section class="photo-gallery">
@@ -55,7 +57,7 @@
               type="text" name="profession" required minlength="2" maxlength="200" autocomplete="off" />
             <span class="about-you-input-error popup__error"></span>
           </fieldset>
-          <button type="submit" class="popup__button-save popup__button-save-profile">
+          <button type="submit" class="popup__button-save">
             Сохранить
           </button>
         </form>
@@ -64,6 +66,26 @@
         </button>
       </div>
     </div>
+
+    <div class="popup popup_type_edit-avatar">
+      <div class="popup__container">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form name="form-avatar" class="popup__form popup__form_type_edit-avatar" novalidate autocomplete="off">
+          <fieldset class="popup__fieldset">
+            <input id="url-avatar-input" class="popup__input popup__input_url_avatar" placeholder="Ссылка на аватар"
+              type="url" name="avatar" required autocomplete="off" />
+            <span class="url-avatar-input-error popup__error"></span>
+          </fieldset>
+          <button type="submit" class="popup__button-save">
+            Сохранить
+          </button>
+        </form>
+        <button type="button" aria-label="Закрыть окно редактирования" class="popup__button-close">
+          <img src="<%=require('./images/button-сlose.svg')%>" alt="Закрыть окно" class="popup__button-close-img" />
+        </button>
+      </div>
+    </div>
+
     <div class="popup popup_type_add-card">
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
@@ -76,7 +98,7 @@
               type="url" name="pic" required autocomplete="off" />
             <span class="url-pic-input-error popup__error"></span>
           </fieldset>
-          <button type="submit" class="popup__button-save popup__button-save-card">
+          <button type="submit" class="popup__button-save">
             Создать
           </button>
         </form>
@@ -85,6 +107,19 @@
         </button>
       </div>
     </div>
+
+    <div class="popup popup_type_delete-card">
+      <div class="popup__container">
+        <h2 class="popup__title">Вы уверены?</h2>
+        <form name="form-add-card" class="popup__form popup__form_type_delete-card" novalidate autocomplete="off">
+          <button type="submit" class="popup__button-delete">Да</button>
+        </form>
+        <button type="button" aria-label="Закрыть окно создания карточки" class="popup__button-close">
+          <img src="<%=require('./images/button-сlose.svg')%>" alt="Закрыть окно" class="popup__button-close-img" />
+        </button>
+      </div>
+    </div>
+
     <div class="popup popup_type_pic">
       <div class="popup__pic-container">
         <img class="popup__pic" alt="Изображение отсутствует" src="#" />
@@ -95,6 +130,7 @@
       </div>
     </div>
   </div>
+
   <template id="card-template">
     <li class="photo-gallery__card card list__item">
       <button type="button" aria-label="Удалить" class="card__button-delete">
@@ -103,7 +139,9 @@
       <img alt="Фотография" class="card__photo" />
       <div class="card__title-and-like">
         <h2 class="card__title"></h2>
-        <button type="button" aria-label="Нравится" class="card__button-like">
+        <button class="card__button-like" type="button" aria-label="Нравится">
+          <div class="card__button-like-img"></div>
+          <p class="card__button-like-count">0</p>
         </button>
       </div>
     </li>

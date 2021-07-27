@@ -1,4 +1,4 @@
-.popup__button-save {
+.popup__button-delete {
   width: 358px;
   height: 50px;
   line-height: 22px;
@@ -13,12 +13,12 @@
   margin: 38px 0 34px 0;
 }
 
-.popup__button-save:hover {
+.popup__button-delete:hover {
   opacity: 0.8;
 }
 
 @media screen and (max-width: 680px) {
-  .popup__button-save {
+  .popup__button-delete {
     width: 238px;
     height: 46px;
     line-height: 17px;

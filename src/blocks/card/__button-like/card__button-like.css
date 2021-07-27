@@ -1,11 +1,15 @@
 .card__button-like {
   width: 22px;
-  height: 19px;
-  background: url(../../../images/like.svg);
+  height: 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
   border: none;
   cursor: pointer;
   transition: opacity 0.5s ease-out;
-  margin: 0 18px 0 0;
+  margin: auto 18px auto 0;
 }
 
 .card__button-like:hover {

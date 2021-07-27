@@ -1,0 +1,24 @@
+.profile__button-edit-avatar-overlay::after {
+  width: 120px;
+  height: 120px;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  background: #000000;
+  opacity: 0;
+  background-position: center;
+  transition: opacity 1s linear, visibility 1s linear;
+  z-index: 2;
+  margin: 0;
+}
+
+.profile__button-edit-avatar-overlay:hover::after {
+  visibility: visible;
+  opacity: .8;
+  background-image: url(../../../images/button-edit-avatar.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px;
+}
