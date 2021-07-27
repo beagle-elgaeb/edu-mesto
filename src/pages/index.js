@@ -80,7 +80,7 @@ validationAddCard.enableValidation();
 const popupAddCard = new PopupWithForm(".popup_type_add-card",
   {
     submitForm: (inputsObject) => {
-      fetch(`${vars.url}/${vars.groupID}/cards`, {
+      return fetch(`${vars.url}/${vars.groupID}/cards`, {
         method: "POST",
         headers: {
           authorization: vars.token,
@@ -134,7 +134,7 @@ const popupProfile = new PopupWithForm(".popup_type_edit-profile",
 
       profileInfo.setUserInfo(inputsObject);
 
-      fetch(`${vars.url}/${vars.groupID}/users/me`, {
+      return fetch(`${vars.url}/${vars.groupID}/users/me`, {
         method: "PATCH",
         headers: {
           authorization: vars.token,
@@ -145,17 +145,9 @@ const popupProfile = new PopupWithForm(".popup_type_edit-profile",
           about: inputsObject.profession
         })
       });
-
-      popupProfile.close();
     }
   }
 );
-
-
-
-
-
-
 
 const profileInfo = new UserInfo(
   {
@@ -176,7 +168,7 @@ const popupAvatar = new PopupWithForm(".popup_type_edit-avatar",
   {
     submitForm: (inputsObject) => {
 
-      fetch(`${vars.url}/${vars.groupID}/users/me/avatar`, {
+      return fetch(`${vars.url}/${vars.groupID}/users/me/avatar`, {
         method: "PATCH",
         headers: {
           authorization: vars.token,
@@ -186,18 +178,14 @@ const popupAvatar = new PopupWithForm(".popup_type_edit-avatar",
           avatar: inputsObject.avatar
         })
       })
-        .then(() => profileInfo.setUserAvatar(inputsObject.avatar));
-
-      popupAvatar.close();
+        .then(() => {
+          profileInfo.setUserAvatar(inputsObject.avatar);
+        });
     }
   }
 );
 
 popupAvatar.setEventListeners();
-
-
-
-
 
 vars.editProfileButton.addEventListener("click", () => {
   vars.fullNameInput.value = profileInfo.getUserInfo().fullName;
