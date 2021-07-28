@@ -19,9 +19,14 @@ import Api from "../scripts/components/Api.js";
 // ~~~~~~~~~~ ИНИЦИАЛИЗАЦИЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-const validationPopupProfile = new FormValidator(vars.selectors, vars.editProfileForm);
+let userID;
+let сardList;
 
+const validationPopupProfile = new FormValidator(vars.selectors, vars.editProfileForm);
 validationPopupProfile.enableValidation();
+
+const validationAddCard = new FormValidator(vars.selectors, vars.addCardForm);
+validationAddCard.enableValidation();
 
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1",
@@ -31,6 +36,73 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+const popupProfile = new PopupWithForm(".popup_type_edit-profile",
+  {
+    submitForm: (inputsObject) => {
+      profileInfo.setUserInfo(inputsObject);
+
+      return api.setProfileData(inputsObject);
+    }
+  }
+);
+
+popupProfile.setEventListeners();
+
+const popupAvatar = new PopupWithForm(".popup_type_edit-avatar",
+  {
+    submitForm: (inputsObject) => {
+
+      return api.setAvatar(inputsObject.avatar)
+        .then(() => {
+          profileInfo.setUserAvatar(inputsObject.avatar);
+        });
+    }
+  }
+);
+
+popupAvatar.setEventListeners();
+
+const profileInfo = new UserInfo(
+  {
+    fullNameSelector: ".profile__info-full-name",
+    professionSelector: ".profile__info-profession",
+    avatarSelector: ".profile__avatar"
+  },
+  {
+    openPopupEditAvatar: () => {
+      popupAvatar.open();
+    }
+  }
+);
+
+profileInfo.setEventListeners();
+
+vars.editProfileButton.addEventListener("click", () => {
+  vars.fullNameInput.value = profileInfo.getUserInfo().fullName;
+  vars.professionInput.value = profileInfo.getUserInfo().profession;
+
+  popupProfile.open();
+});
+
+
+
+function loadProfile(profileInfo) {
+  return api.getProfileData()
+    .then((result) => {
+      const data = { fullName: result.name, profession: result.about };
+      const avatar = result.avatar;
+
+      profileInfo.setUserInfo(data);
+      profileInfo.setUserAvatar(avatar);
+
+      userID = result._id;
+    });
+}
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~ КАРТОЧКИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,120 +135,16 @@ function addCard(data) {
   сardList.addItem(cardElement);
 }
 
-const validationAddCard = new FormValidator(vars.selectors, vars.addCardForm);
-
-validationAddCard.enableValidation();
-
-const popupAddCard = new PopupWithForm(".popup_type_add-card",
-  {
-    submitForm: (inputsObject) => {
-      return api.createCard(inputsObject)
-        .then((card) => {
-          addCard({
-            pic: card.link,
-            title: card.name,
-            like: card.likes.length,
-            author: card.owner.name,
-            own: card.owner._id === userID,
-            id: card._id,
-            ownLike: card.likes.find((like) => { return userID === like._id })
-          });
-        })
-    }
+function convertCardData(card) {
+  return {
+    pic: card.link,
+    title: card.name,
+    like: card.likes.length,
+    author: card.owner.name,
+    own: card.owner._id === userID,
+    id: card._id,
+    ownLike: card.likes.find((like) => { return userID === like._id })
   }
-);
-
-vars.addCardButton.addEventListener("click", function () {
-  popupAddCard.open();
-});
-
-popupAddCard.setEventListeners();
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~ ДЕМОНСТРАЦИЯ КАРТОЧЕК ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-const popupWithPic = new PopupWithImage(".popup_type_pic");
-
-popupWithPic.setEventListeners();
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~ ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-const popupProfile = new PopupWithForm(".popup_type_edit-profile",
-  {
-    submitForm: (inputsObject) => {
-
-      profileInfo.setUserInfo(inputsObject);
-
-      return api.setProfileData(inputsObject);
-    }
-  }
-);
-
-const profileInfo = new UserInfo(
-  {
-    fullNameSelector: ".profile__info-full-name",
-    professionSelector: ".profile__info-profession",
-    avatarSelector: ".profile__avatar"
-  },
-  {
-    openPopupEditAvatar: () => {
-      popupAvatar.open();
-    }
-  }
-);
-
-profileInfo.setEventListeners();
-
-const popupAvatar = new PopupWithForm(".popup_type_edit-avatar",
-  {
-    submitForm: (inputsObject) => {
-
-      return api.setAvatar(inputsObject.avatar)
-        .then(() => {
-          profileInfo.setUserAvatar(inputsObject.avatar);
-        });
-    }
-  }
-);
-
-popupAvatar.setEventListeners();
-
-vars.editProfileButton.addEventListener("click", () => {
-  vars.fullNameInput.value = profileInfo.getUserInfo().fullName;
-  vars.professionInput.value = profileInfo.getUserInfo().profession;
-
-  popupProfile.open();
-});
-
-popupProfile.setEventListeners();
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~ ЗАГРУЗКА ДАННЫХ С СЕРВЕРА ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-let userID;
-let сardList;
-
-loadProfile(profileInfo)
-  .then(() => {
-    loadCards();
-  })
-
-
-function loadProfile(profileInfo) {
-  return api.getProfileData()
-    .then((result) => {
-      const data = { fullName: result.name, profession: result.about };
-      const avatar = result.avatar;
-
-      profileInfo.setUserInfo(data);
-      profileInfo.setUserAvatar(avatar);
-
-      userID = result._id;
-    });
 }
 
 function loadCards() {
@@ -186,15 +154,7 @@ function loadCards() {
         {
           data: cards.reverse(),
           renderer: (card) => {
-            addCard({
-              pic: card.link,
-              title: card.name,
-              like: card.likes.length,
-              author: card.owner.name,
-              own: card.owner._id === userID,
-              id: card._id,
-              ownLike: card.likes.find((like) => { return userID === like._id })
-            });
+            addCard(convertCardData(card));
           }
         },
         ".photo-gallery__cards"
@@ -204,7 +164,33 @@ function loadCards() {
     });
 }
 
+const popupAddCard = new PopupWithForm(".popup_type_add-card",
+  {
+    submitForm: (inputsObject) => {
+      return api.createCard(inputsObject)
+        .then((card) => {
+          addCard(convertCardData(card));
+        })
+    }
+  }
+);
 
+popupAddCard.setEventListeners();
 
+vars.addCardButton.addEventListener("click", function () {
+  popupAddCard.open();
+});
 
+const popupWithPic = new PopupWithImage(".popup_type_pic");
 
+popupWithPic.setEventListeners();
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ ЗАГРУЗКА ДАННЫХ С СЕРВЕРА ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+loadProfile(profileInfo)
+  .then(() => {
+    loadCards();
+  })
+  
