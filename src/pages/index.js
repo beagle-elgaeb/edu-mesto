@@ -13,54 +13,44 @@ import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupForDelete from "../scripts/components/PopupForDelete.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import FormValidator from "../scripts/components/FormValidator.js";
+import Api from "../scripts/components/Api.js";
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ ИНИЦИАЛИЗАЦИЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+const validationPopupProfile = new FormValidator(vars.selectors, vars.editProfileForm);
+
+validationPopupProfile.enableValidation();
+
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1",
+  groupID: "cohort-26",
+  headers: {
+    authorization: "05288f01-26d1-4add-96c0-b100674c662e",
+    'Content-Type': 'application/json'
+  }
+});
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~ КАРТОЧКИ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-function removeCard(cardID) {
-  return fetch(`https://mesto.nomoreparties.co/v1/cohort-26/cards/${cardID}`, {
-    method: "DELETE",
-    headers: {
-      authorization: "05288f01-26d1-4add-96c0-b100674c662e",
-      "Content-Type": "application/json"
-    }
-  })
-}
 
 function createCard(data) {
   const card = new Card(
     data,
     "#card-template",
     {
-      openPopupView: (pic, title) => {
-        popupWithPic.open(pic, title);
-      },
+      openPopupView: (pic, title, author) => popupWithPic.open(pic, title, author),
       openPopupDelete: () => {
         const popupDeleteCard = new PopupForDelete(".popup_type_delete-card", () => {
-          removeCard(data.id)
+          api.removeCard(data.id)
             .then(() => card.removeCard());
         });
         popupDeleteCard.open();
       },
-      likeCard: () => {
-        fetch(`${vars.url}/${vars.groupID}/cards/likes/${data.id}`, {
-          method: "PUT",
-          headers: {
-            authorization: vars.token,
-            "Content-Type": "application/json"
-          }
-        })
-      },
-      unlikeCard: () => {
-        fetch(`${vars.url}/${vars.groupID}/cards/likes/${data.id}`, {
-          method: "DELETE",
-          headers: {
-            authorization: vars.token,
-            "Content-Type": "application/json"
-          }
-        })
-      }
+      likeCard: () => api.likeCard(data.id),
+      unlikeCard: () => api.unlikeCard(data.id)
     }
   );
 
@@ -80,23 +70,13 @@ validationAddCard.enableValidation();
 const popupAddCard = new PopupWithForm(".popup_type_add-card",
   {
     submitForm: (inputsObject) => {
-      return fetch(`${vars.url}/${vars.groupID}/cards`, {
-        method: "POST",
-        headers: {
-          authorization: vars.token,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: inputsObject.title,
-          link: inputsObject.pic
-        })
-      })
-        .then(res => res.json())
+      return api.createCard(inputsObject)
         .then((card) => {
           addCard({
             pic: card.link,
             title: card.name,
             like: card.likes.length,
+            author: card.owner.name,
             own: card.owner._id === userID,
             id: card._id,
             ownLike: card.likes.find((like) => { return userID === like._id })
@@ -124,27 +104,13 @@ popupWithPic.setEventListeners();
 // ~~~~~~~~~~ ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-const validationPopupProfile = new FormValidator(vars.selectors, vars.editProfileForm);
-
-validationPopupProfile.enableValidation();
-
 const popupProfile = new PopupWithForm(".popup_type_edit-profile",
   {
     submitForm: (inputsObject) => {
 
       profileInfo.setUserInfo(inputsObject);
 
-      return fetch(`${vars.url}/${vars.groupID}/users/me`, {
-        method: "PATCH",
-        headers: {
-          authorization: vars.token,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: inputsObject.fullName,
-          about: inputsObject.profession
-        })
-      });
+      return api.setProfileData(inputsObject);
     }
   }
 );
@@ -168,16 +134,7 @@ const popupAvatar = new PopupWithForm(".popup_type_edit-avatar",
   {
     submitForm: (inputsObject) => {
 
-      return fetch(`${vars.url}/${vars.groupID}/users/me/avatar`, {
-        method: "PATCH",
-        headers: {
-          authorization: vars.token,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          avatar: inputsObject.avatar
-        })
-      })
+      return api.setAvatar(inputsObject.avatar)
         .then(() => {
           profileInfo.setUserAvatar(inputsObject.avatar);
         });
@@ -210,12 +167,7 @@ loadProfile(profileInfo)
 
 
 function loadProfile(profileInfo) {
-  return fetch(`${vars.url}/${vars.groupID}/users/me`, {
-    headers: {
-      authorization: vars.token
-    }
-  })
-    .then(res => res.json())
+  return api.getProfileData()
     .then((result) => {
       const data = { fullName: result.name, profession: result.about };
       const avatar = result.avatar;
@@ -228,12 +180,7 @@ function loadProfile(profileInfo) {
 }
 
 function loadCards() {
-  fetch(`${vars.url}/${vars.groupID}/cards`, {
-    headers: {
-      authorization: vars.token
-    }
-  })
-    .then(res => res.json())
+  api.getInitialCards()
     .then((cards) => {
       сardList = new Section(
         {
@@ -243,6 +190,7 @@ function loadCards() {
               pic: card.link,
               title: card.name,
               like: card.likes.length,
+              author: card.owner.name,
               own: card.owner._id === userID,
               id: card._id,
               ownLike: card.likes.find((like) => { return userID === like._id })
@@ -255,4 +203,8 @@ function loadCards() {
       сardList.renderItems();
     });
 }
+
+
+
+
 

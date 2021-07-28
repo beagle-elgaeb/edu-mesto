@@ -7,6 +7,7 @@ export default class Card {
     this._pic = data.pic;
     this._title = data.title;
     this._like = data.like;
+    this._author = data.author;
     this._own = data.own;
     this._id = data.id;
     this._ownLike = data.ownLike;
@@ -67,7 +68,7 @@ export default class Card {
   }
 
   _handleOpenCard = () => {
-    this._openPopupView(this._pic, this._title);
+    this._openPopupView(this._pic, this._title, this._author);
   }
 
   _handleLikeCard = (evt) => {
@@ -88,8 +89,3 @@ export default class Card {
     }
   }
 }
-
-
-
-
-
