@@ -1,0 +1,20 @@
+.popup__error-container {
+  width: 430px;
+  position: relative;
+  line-height: 0.8;
+  font-size: 26px;
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ff0000;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 25px 20px;
+}
+
+@media screen and (max-width: 680px) {
+  .popup__error-container {
+    width: 282px;
+    font-size: 20px;
+  }
+}

@@ -9,7 +9,7 @@
   background: #000000;
   opacity: 0;
   background-position: center;
-  transition: opacity 1s linear, visibility 1s linear;
+  transition: opacity .3s linear, visibility .3s linear;
   z-index: 2;
   margin: 0;
 }

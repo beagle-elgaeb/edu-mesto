@@ -3,42 +3,48 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export default class Api {
-  constructor(options) {
+  constructor(options, { onError }) {
     this._baseUrl = options.baseUrl;
     this._groupID = options.groupID;
     this._headers = options.headers;
+
+    this._onError = onError;
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/${this._groupID}/cards`, {
+    const promise = fetch(`${this._baseUrl}/${this._groupID}/cards`, {
       headers: {
         authorization: this._headers.authorization
       }
     })
-      .then(res => res.json())
+
+    return this._wrapPromiseWithResult(promise);
   }
 
   getProfileData() {
-    return fetch(`${this._baseUrl}/${this._groupID}/users/me`, {
+    const promise = fetch(`${this._baseUrl}/${this._groupID}/users/me`, {
       headers: {
         authorization: this._headers.authorization
       }
     })
-      .then(res => res.json())
+
+    return this._wrapPromiseWithResult(promise);
   }
 
   setAvatar(avatar) {
-    return fetch(`${this._baseUrl}/${this._groupID}/users/me/avatar`, {
+    const promise = fetch(`${this._baseUrl}/${this._groupID}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatar
       })
     })
+
+    return this._wrapPromise(promise);
   }
 
   setProfileData(inputsObject) {
-    return fetch(`${this._baseUrl}/${this._groupID}/users/me`, {
+    const promise = fetch(`${this._baseUrl}/${this._groupID}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -46,10 +52,12 @@ export default class Api {
         about: inputsObject.profession
       })
     })
+
+    return this._wrapPromise(promise);
   }
 
   createCard(inputsObject) {
-    return fetch(`${this._baseUrl}/${this._groupID}/cards`, {
+    const promise = fetch(`${this._baseUrl}/${this._groupID}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
@@ -57,27 +65,54 @@ export default class Api {
         link: inputsObject.pic
       })
     })
-      .then(res => res.json())
+
+    return this._wrapPromiseWithResult(promise);
   }
 
   removeCard(id) {
-    return fetch(`${this._baseUrl}/${this._groupID}/cards/${id}`, {
+    const promise = fetch(`${this._baseUrl}/${this._groupID}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers
     })
+
+    return this._wrapPromise(promise);
   }
 
   likeCard(id) {
-    return fetch(`${this._baseUrl}/${this._groupID}/cards/likes/${id}`, {
+    const promise = fetch(`${this._baseUrl}/${this._groupID}/cards/likes/${id}`, {
       method: "PUT",
       headers: this._headers
     })
+
+    return this._wrapPromise(promise);
   }
 
   unlikeCard(id) {
-    return fetch(`${this._baseUrl}/${this._groupID}/cards/likes/${id}`, {
+    const promise = fetch(`${this._baseUrl}/${this._groupID}/cards/likes/${id}`, {
       method: "DELETE",
       headers: this._headers
     })
+
+    return this._wrapPromise(promise);
+  }
+
+  _wrapPromise(promise) {
+    return promise
+      .catch((err) => {
+        this._onError();
+        console.log(err);
+      });
+  }
+
+  _wrapPromiseWithResult(promise) {
+    return promise
+      .then(res => {
+        if (res.ok) { return res.json() }
+        return Promise.reject(`Статут ошибки: ${res.status}`);
+      })
+      .catch((err) => {
+        this._onError();
+        console.log(err);
+      });
   }
 }

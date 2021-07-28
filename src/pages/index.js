@@ -8,6 +8,7 @@ import * as vars from "../scripts/utils/variables.js";
 
 import Card from "../scripts/components/Card.js";
 import Section from "../scripts/components/Section.js";
+import Popup from "../scripts/components/Popup.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupForDelete from "../scripts/components/PopupForDelete.js";
@@ -22,20 +23,30 @@ import Api from "../scripts/components/Api.js";
 let userID;
 let сardList;
 
-const validationPopupProfile = new FormValidator(vars.selectors, vars.editProfileForm);
-validationPopupProfile.enableValidation();
+const validationEditProfile = new FormValidator(vars.selectors, vars.editProfileForm);
+validationEditProfile.enableValidation();
+
+const validationEditAvatar = new FormValidator(vars.selectors, vars.editAvatarForm);
+validationEditAvatar.enableValidation();
 
 const validationAddCard = new FormValidator(vars.selectors, vars.addCardForm);
 validationAddCard.enableValidation();
 
-const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1",
-  groupID: "cohort-26",
-  headers: {
-    authorization: "05288f01-26d1-4add-96c0-b100674c662e",
-    'Content-Type': 'application/json'
-  }
-});
+const popupError = new Popup(".popup_type_error");
+popupError.setEventListeners();
+
+const api = new Api(
+  {
+    baseUrl: "https://mesto.nomoreparties.co/v1",
+    groupID: "cohort-26",
+    headers: {
+      authorization: "05288f01-26d1-4add-96c0-b100674c662e",
+      'Content-Type': 'application/json'
+    }
+  },
+  {
+    onError: () => popupError.open()
+  });
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ~~~~~~~~~~ ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,8 +99,6 @@ vars.editProfileButton.addEventListener("click", () => {
 
   popupProfile.open();
 });
-
-
 
 function loadProfile(profileInfo) {
   return api.getProfileData()
@@ -193,4 +202,3 @@ loadProfile(profileInfo)
   .then(() => {
     loadCards();
   })
-  

@@ -19,7 +19,7 @@
       <main class="content">
         <section class="profile">
           <button class="profile__button-edit-avatar profile__button-edit-avatar-overlay">
-            <img class="profile__avatar" src="" alt="Фото профиля" />
+            <img class="profile__avatar" src="<%=require('./images/loader.gif')%>" alt="Фото профиля" />
           </button>
           <div class="profile__info">
             <div class="profile__info-full-name-and-button-edit">
@@ -130,6 +130,18 @@
       </div>
     </div>
   </div>
+
+  <div class="popup popup_type_error">
+    <div class="popup__error-container">
+      <p>Что-то пошло не так.</p>
+      <p>Но я не знаю что.</p>
+      <p>Посмотрите в консоль.</p>
+      <button type="button" aria-label="Закрыть ошибку" class="popup__button-close">
+        <img src="<%=require('./images/button-сlose.svg')%>" alt="Закрыть окно" class="popup__button-close-img" />
+      </button>
+    </div>
+  </div>
+</div>
 
   <template id="card-template">
     <li class="photo-gallery__card card list__item">
