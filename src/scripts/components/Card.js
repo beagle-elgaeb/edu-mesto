@@ -3,7 +3,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export default class Card {
-  constructor(data, cardTemplate, { openPopupView, openPopupDelete, likeCard, unlikeCard }) {
+  constructor(data, cardTemplate, { openPopupView, openPopupDelete, onLikeCard, onUnlikeCard }) {
     this._pic = data.pic;
     this._title = data.title;
     this._like = data.like;
@@ -15,8 +15,8 @@ export default class Card {
     this._cardTemplate = cardTemplate;
     this._openPopupView = openPopupView;
     this._openPopupDelete = openPopupDelete;
-    this._likeCard = likeCard;
-    this._unlikeCard = unlikeCard;
+    this._onLikeCard = onLikeCard;
+    this._onUnlikeCard = onUnlikeCard;
   }
 
   generateCard() {
@@ -51,6 +51,25 @@ export default class Card {
     this._element.remove();
   }
 
+  onLikeCard(like) {
+    this._likesCountElement.textContent = like;
+    this._likeButton.classList.add("card__button-like-img_active");
+  }
+
+  onUnlikeCard(like) {
+    this._likesCountElement.textContent = like;
+    this._likeButton.classList.remove("card__button-like-img_active");
+  }
+
+
+  _handleLikeCard = (evt) => {
+    if (!evt.target.classList.contains("card__button-like-img_active")) {
+      this._onLikeCard();
+    } else {
+      this._onUnlikeCard();
+    }
+  }
+
   _cloneTemplate = () => {
     const cardElement = document
       .querySelector(this._cardTemplate)
@@ -69,18 +88,6 @@ export default class Card {
 
   _handleOpenCard = () => {
     this._openPopupView(this._pic, this._title, this._author);
-  }
-
-  _handleLikeCard = (evt) => {
-    if (!evt.target.classList.contains("card__button-like-img_active")) {
-      this._likeCard();
-      evt.target.classList.add("card__button-like-img_active");
-      this._likesCountElement.textContent = Number(this._likesCountElement.textContent) + 1;
-    } else {
-      this._unlikeCard();
-      evt.target.classList.remove("card__button-like-img_active");
-      this._likesCountElement.textContent = Number(this._likesCountElement.textContent) - 1;
-    }
   }
 
   _handleDeleteCard = () => {

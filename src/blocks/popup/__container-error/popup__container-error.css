@@ -1,4 +1,4 @@
-.popup__error-container {
+.popup__container-error {
   width: 430px;
   position: relative;
   line-height: 0.8;
@@ -13,7 +13,7 @@
 }
 
 @media screen and (max-width: 680px) {
-  .popup__error-container {
+  .popup__container-error {
     width: 282px;
     font-size: 20px;
   }

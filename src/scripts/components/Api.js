@@ -3,12 +3,10 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export default class Api {
-  constructor(options, { onError }) {
+  constructor(options) {
     this._baseUrl = options.baseUrl;
     this._groupID = options.groupID;
     this._headers = options.headers;
-
-    this._onError = onError;
   }
 
   getInitialCards() {
@@ -18,7 +16,7 @@ export default class Api {
       }
     })
 
-    return this._wrapPromiseWithResult(promise);
+    return this._wrapPromise(promise);
   }
 
   getProfileData() {
@@ -28,7 +26,7 @@ export default class Api {
       }
     })
 
-    return this._wrapPromiseWithResult(promise);
+    return this._wrapPromise(promise);
   }
 
   setAvatar(avatar) {
@@ -66,7 +64,7 @@ export default class Api {
       })
     })
 
-    return this._wrapPromiseWithResult(promise);
+    return this._wrapPromise(promise);
   }
 
   removeCard(id) {
@@ -98,21 +96,9 @@ export default class Api {
 
   _wrapPromise(promise) {
     return promise
-      .catch((err) => {
-        this._onError();
-        console.log(err);
-      });
-  }
-
-  _wrapPromiseWithResult(promise) {
-    return promise
       .then(res => {
         if (res.ok) { return res.json() }
         return Promise.reject(`Статут ошибки: ${res.status}`);
       })
-      .catch((err) => {
-        this._onError();
-        console.log(err);
-      });
   }
 }

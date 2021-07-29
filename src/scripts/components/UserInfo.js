@@ -3,18 +3,14 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export default class UserInfo {
-  constructor( { fullNameSelector, professionSelector, avatarSelector }, { openPopupEditAvatar } ) {
+  constructor( { fullNameSelector, professionSelector, avatarSelector } ) {
     this._fullNameSelector = fullNameSelector;
     this._professionSelector = professionSelector;
     this._avatarSelector = avatarSelector;
 
-    this._openPopupEditAvatar = openPopupEditAvatar;
-
     this._fullName = document.querySelector(this._fullNameSelector);
     this._profession = document.querySelector(this._professionSelector);
     this._avatar = document.querySelector(this._avatarSelector);
-
-    this._avatarEditButton = document.querySelector(".profile__button-edit-avatar");
   }
   
   getUserInfo() {
@@ -36,9 +32,5 @@ export default class UserInfo {
 
   setUserAvatar(avatar) {
     this._avatar.src = avatar;
-  }
-
-  setEventListeners() {
-    this._avatarEditButton.addEventListener("click", () => this._openPopupEditAvatar())
   }
 }

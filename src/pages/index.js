@@ -43,9 +43,6 @@ const api = new Api(
       authorization: "05288f01-26d1-4add-96c0-b100674c662e",
       'Content-Type': 'application/json'
     }
-  },
-  {
-    onError: () => popupError.open()
   });
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,9 +52,15 @@ const api = new Api(
 const popupProfile = new PopupWithForm(".popup_type_edit-profile",
   {
     submitForm: (inputsObject) => {
-      profileInfo.setUserInfo(inputsObject);
-
-      return api.setProfileData(inputsObject);
+      return api.setProfileData(inputsObject)
+        .then(() => {
+          profileInfo.setUserInfo(inputsObject);
+          popupProfile.close();
+        })
+        .catch((err) => {
+          popupError.open();
+          console.log(err);
+        })
     }
   }
 );
@@ -71,7 +74,12 @@ const popupAvatar = new PopupWithForm(".popup_type_edit-avatar",
       return api.setAvatar(inputsObject.avatar)
         .then(() => {
           profileInfo.setUserAvatar(inputsObject.avatar);
-        });
+          popupAvatar.close();
+        })
+        .catch((err) => {
+          popupError.open();
+          console.log(err);
+        })
     }
   }
 );
@@ -83,15 +91,12 @@ const profileInfo = new UserInfo(
     fullNameSelector: ".profile__info-full-name",
     professionSelector: ".profile__info-profession",
     avatarSelector: ".profile__avatar"
-  },
-  {
-    openPopupEditAvatar: () => {
-      popupAvatar.open();
-    }
   }
 );
 
-profileInfo.setEventListeners();
+const avatarEditButton = document.querySelector(".profile__button-edit-avatar");
+
+avatarEditButton.addEventListener("click", () => popupAvatar.open());
 
 vars.editProfileButton.addEventListener("click", () => {
   vars.fullNameInput.value = profileInfo.getUserInfo().fullName;
@@ -110,7 +115,11 @@ function loadProfile(profileInfo) {
       profileInfo.setUserAvatar(avatar);
 
       userID = result._id;
-    });
+    })
+    .catch((err) => {
+      popupError.open();
+      console.log(err);
+    })
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -126,12 +135,37 @@ function createCard(data) {
       openPopupDelete: () => {
         const popupDeleteCard = new PopupForDelete(".popup_type_delete-card", () => {
           api.removeCard(data.id)
-            .then(() => card.removeCard());
+            .then(() => {
+              card.removeCard();
+              popupDeleteCard.close();
+            })
+            .catch((err) => {
+              popupError.open();
+              console.log(err);
+            })
         });
         popupDeleteCard.open();
       },
-      likeCard: () => api.likeCard(data.id),
-      unlikeCard: () => api.unlikeCard(data.id)
+      onLikeCard: () => {
+        api.likeCard(data.id)
+          .then((like) => {
+            card.onLikeCard(like.likes.length);
+          })
+          .catch((err) => {
+            popupError.open();
+            console.log(err);
+          })
+      },
+      onUnlikeCard: () => {
+        api.unlikeCard(data.id)
+          .then((like) => {
+            card.onUnlikeCard(like.likes.length);
+          })
+          .catch((err) => {
+            popupError.open();
+            console.log(err);
+          })
+      }
     }
   );
 
@@ -170,7 +204,11 @@ function loadCards() {
       );
 
       сardList.renderItems();
-    });
+    })
+    .catch((err) => {
+      popupError.open();
+      console.log(err);
+    })
 }
 
 const popupAddCard = new PopupWithForm(".popup_type_add-card",
@@ -179,6 +217,11 @@ const popupAddCard = new PopupWithForm(".popup_type_add-card",
       return api.createCard(inputsObject)
         .then((card) => {
           addCard(convertCardData(card));
+          popupAddCard.close();
+        })
+        .catch((err) => {
+          popupError.open();
+          console.log(err);
         })
     }
   }

@@ -36,10 +36,6 @@ export default class PopupWithForm extends Popup {
       }
 
       this._buttonSubmit.textContent = "Сохранить...";
-
-      promise.then(() => {
-        this.close();
-      })
     });
   }
 

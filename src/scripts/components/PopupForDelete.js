@@ -25,8 +25,6 @@ export default class PopupForDelete extends Popup {
 
     this._removeCard();
 
-    super.close();
-
     this._form.removeEventListener("submit", this._submitForm);
   }
 }
