@@ -61,6 +61,9 @@ export default class Card {
     this._likeButton.classList.remove("card__button-like-img_active");
   }
 
+  getID() {
+    return this._id;
+  }
 
   _handleLikeCard = (evt) => {
     if (!evt.target.classList.contains("card__button-like-img_active")) {

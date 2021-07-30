@@ -133,8 +133,8 @@ function createCard(data) {
     {
       openPopupView: (pic, title, author) => popupWithPic.open(pic, title, author),
       openPopupDelete: () => {
-        const popupDeleteCard = new PopupForDelete(".popup_type_delete-card", () => {
-          api.removeCard(data.id)
+        const onRemove = () => {
+          api.removeCard(card.getID())
             .then(() => {
               card.removeCard();
               popupDeleteCard.close();
@@ -142,9 +142,10 @@ function createCard(data) {
             .catch((err) => {
               popupError.open();
               console.log(err);
-            })
-        });
-        popupDeleteCard.open();
+            });
+        };
+
+        popupDeleteCard.open(onRemove);
       },
       onLikeCard: () => {
         api.likeCard(data.id)
@@ -171,6 +172,10 @@ function createCard(data) {
 
   return card.generateCard();
 }
+
+const popupDeleteCard = new PopupForDelete(".popup_type_delete-card");
+
+popupDeleteCard.setEventListeners();
 
 function addCard(data) {
   const cardElement = createCard(data);
