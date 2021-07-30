@@ -51,14 +51,20 @@ export default class Card {
     this._element.remove();
   }
 
-  onLikeCard(like) {
-    this._likesCountElement.textContent = like;
-    this._likeButton.classList.add("card__button-like-img_active");
+  waitLike() {
+    this._likeButton.classList.add("card__button-like-img_wait");
   }
 
-  onUnlikeCard(like) {
-    this._likesCountElement.textContent = like;
-    this._likeButton.classList.remove("card__button-like-img_active");
+  updateLikeCard(likeCount, ownLike) {
+    this._likesCountElement.textContent = likeCount;
+
+    this._likeButton.classList.remove("card__button-like-img_wait");
+
+    if (ownLike) {
+      this._likeButton.classList.add("card__button-like-img_active");
+    } else {
+      this._likeButton.classList.remove("card__button-like-img_active");
+    }
   }
 
   getID() {

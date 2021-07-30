@@ -43,6 +43,7 @@
   @import url(../blocks/card/__button-like/card__button-like.css);
   @import url(../blocks/card/__button-like-img/card__button-like-img.css);
   @import url(../blocks/card/__button-like-img/_active/card__button-like-img_active.css);
+  @import url(../blocks/card/__button-like-img/_wait/card__button-like-img_wait.css);
   @import url(../blocks/card/__button-like-count/card__button-like-count.css);
 
 /* Footer */

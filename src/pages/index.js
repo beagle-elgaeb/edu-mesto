@@ -148,9 +148,12 @@ function createCard(data) {
         popupDeleteCard.open(onRemove);
       },
       onLikeCard: () => {
+        card.waitLike();
+
         api.likeCard(data.id)
-          .then((like) => {
-            card.onLikeCard(like.likes.length);
+          .then((likedCard) => {
+            const ownLike = likedCard.likes.find((like) => { return userID === like._id })
+            card.updateLikeCard(likedCard.likes.length, ownLike);
           })
           .catch((err) => {
             popupError.open();
@@ -158,9 +161,12 @@ function createCard(data) {
           })
       },
       onUnlikeCard: () => {
+        card.waitLike();
+
         api.unlikeCard(data.id)
-          .then((like) => {
-            card.onUnlikeCard(like.likes.length);
+          .then((likedCard) => {
+            const ownLike = likedCard.likes.find((like) => { return userID === like._id })
+            card.updateLikeCard(likedCard.likes.length, ownLike);
           })
           .catch((err) => {
             popupError.open();
