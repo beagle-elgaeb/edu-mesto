@@ -2,7 +2,7 @@
 
 ## Третья учебная работа Никоновой Евгении для Яндекс.Практикум
 
-_[Ссылка на страницу на GitHub Pages](https://beagle-elgaeb.github.io/mesto/)_
+_[Ссылка на страницу на GitHub Pages](https://beagle-elgaeb.github.io/edu-mesto/)_
 
 <p>
   <a href="https://developer.mozilla.org/ru/docs/Web/CSS"><img src="readme/icon-css3.svg" alt="CSS3"></a>
@@ -30,7 +30,7 @@ _[Ссылка на страницу на GitHub Pages](https://beagle-elgaeb.gi
 - возможность редактирования профиля, добавления, удаления и оценки лайками фотографий;
 - лайв валидация форм;
 - проработан UX (при отправке данных на сервер меняется состояние кнопки);
-- [страница размещена на GitHub Pages](https://beagle-elgaeb.github.io/mesto/);
+- [страница размещена на GitHub Pages](https://beagle-elgaeb.github.io/edu-mesto/);
 - страница адаптируется с контрольными точками: 320px, 680px, 980px, 1280px.
 
 ### Задачи учебного проекта
@@ -40,7 +40,7 @@ _[Ссылка на страницу на GitHub Pages](https://beagle-elgaeb.gi
 
 ### Планы на дальнейшую реализацию проекта
 
-- [Портировать проект в React](https://github.com/beagle-elgaeb/mesto-react).
+- [Портировать проект в React](https://github.com/beagle-elgaeb/edu-mesto-react).
 
 ### Как использовать
 
